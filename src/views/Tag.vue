@@ -1,44 +1,37 @@
 <template>
-  <div class="home">
-    <h1>Home</h1>
+  <h1>Tag</h1>
+  <div class="tag">
     <div v-if="error">error:{{ error }}</div>
     <div v-if="posts.length" class="layout">
-      <PostList :posts="posts" />
+      <PostList :posts="tagPosts" />
       <TagCloud :posts="posts" />
     </div>
-    <div v-else>
-      <Spinner v-if="!error" />
-    </div>
+    <Spinner v-else />
   </div>
 </template>
 
 <script>
-import PostList from '../components/PostList.vue';
+import { computed } from 'vue';
+import { useRoute } from 'vue-router';
 import getPosts from '../composables/getPosts';
 import Spinner from '../components/Spinner.vue';
+import PostList from '../components/PostList.vue';
 import TagCloud from '@/components/TagCloud.vue';
+
 export default {
-  name: 'HomeView',
+  props: 'tag',
   components: { PostList, Spinner, TagCloud },
   setup() {
+    const route = useRoute();
     const { posts, error, load } = getPosts();
     load();
-
-    return { posts, error };
+    console.log(posts);
+    const tagPosts = computed(() => {
+      return posts.value.filter((p) => p.tags.includes(route.params.tag));
+    });
+    return { error, tagPosts, posts };
   },
 };
 </script>
 
-<style>
-.home {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 10px;
-}
-
-.layout {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  gap: 20px;
-}
-</style>
+<style></style>

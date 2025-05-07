@@ -1,0 +1,68 @@
+{
+  "posts": [
+    {
+      "id": "1",
+      "title": "welcome",
+      "body": "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Ipsam eius, eaque veritatis iusto odit magni porro eum, voluptatum optio impedit eligendi libero soluta repudiandae deleniti iure numquam, inventore ad quia?",
+      "tags": [
+        "news",
+        "webdev",
+        "coding"
+      ]
+    },
+    {
+      "id": "2",
+      "title": "top 5 css tips",
+      "body": "lorem ips",
+      "tags": [
+        "css",
+        "webdev",
+        "coding"
+      ]
+    },
+    {
+      "id": "7f1b",
+      "title": "t",
+      "body": "f",
+      "tags": [
+        "r"
+      ]
+    },
+    {
+      "id": "1cf3",
+      "title": "daniel",
+      "body": "min blogg",
+      "tags": []
+    },
+    {
+      "id": "d2f0",
+      "title": "dan",
+      "body": "test",
+      "tags": []
+    },
+    {
+      "id": "aea7",
+      "title": "d",
+      "body": "a",
+      "tags": [
+        "f"
+      ]
+    },
+    {
+      "id": "a5ab",
+      "title": "tttt",
+      "body": "aaaaa",
+      "tags": [
+        "l"
+      ]
+    },
+    {
+      "id": "9527",
+      "title": "NY",
+      "body": "blabla",
+      "tags": [
+        "css"
+      ]
+    }
+  ]
+}
