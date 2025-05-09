@@ -1,5 +1,4 @@
 <template>
-  <h1>Edit post</h1>
   <form @submit.prevent="handleSubmit" v-if="post">
     <label>Title:</label>
     <input type="text" required v-model="title" />

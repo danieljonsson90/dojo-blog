@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>Daniels Vietnam Blogg</h1>
+    <h1>Vietnam Blogg</h1>
     <nav>
       <router-link :to="{ name: 'Home' }">Home</router-link>
       <router-link :to="{ name: 'Create' }">Create Post</router-link>
@@ -29,15 +29,15 @@ nav a.router-link-active {
 }
 
 header {
+  /* position: sticky;
+  top: 0; */
+  background-color: #222; /* valfritt, men ofta behövs för att täcka bakomliggande */
   display: flex;
   justify-content: space-between;
   align-items: center;
-  max-width: 1200px;
-  margin: 0 auto;
   padding: 10px;
   height: 15rem;
 }
-
 header h1 {
   color: #dfdfdf;
   font-size: 48px;

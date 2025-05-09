@@ -35,12 +35,14 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 999;
 }
 .modal-content {
   background: white;
   padding: 2rem;
   border-radius: 10px;
   position: relative;
+  z-index: 1000;
 }
 .modal-content button {
   margin-top: 1rem;
