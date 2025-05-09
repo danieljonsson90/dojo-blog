@@ -9,7 +9,6 @@
         <router-link :to="{ name: 'Edit', params: { id: post.id } }">
           <span class="material-icons">edit</span>
         </router-link>
-        <!-- <button @click="handleClick">Delete Post</button> -->
         <span @click="showModal = true" class="material-icons">delete</span>
       </div>
     </div>
@@ -37,7 +36,7 @@ export default {
   components: { Modal },
   setup(props, { emit }) {
     const snippet = computed(() => {
-      return props.post.body.substring(0, 100) + '....';
+      return props.post.body.substring(0, 300) + '....';
     });
     const showModal = ref(false);
     const { errorRemove, remove } = removePost();

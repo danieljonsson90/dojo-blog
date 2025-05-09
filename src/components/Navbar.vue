@@ -4,6 +4,7 @@
     <nav>
       <router-link :to="{ name: 'Home' }">Home</router-link>
       <router-link :to="{ name: 'Create' }">Create Post</router-link>
+      <router-link :to="{ name: 'Gallery' }">Gallery</router-link>
     </nav>
   </header>
 </template>
@@ -34,6 +35,7 @@ header {
   max-width: 1200px;
   margin: 0 auto;
   padding: 10px;
+  height: 15rem;
 }
 
 header h1 {

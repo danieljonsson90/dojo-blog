@@ -4,7 +4,7 @@
       <slot />
       <div class="modal-buttons">
         <button class="close-button" @click="close">
-          <span @click="showModal = true" class="material-icons">close</span>
+          <span class="material-icons">close</span>
         </button>
         <button class="remove-button" @click="remove">Ta bort</button>
       </div>

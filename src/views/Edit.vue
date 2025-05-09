@@ -4,7 +4,7 @@
     <label>Title:</label>
     <input type="text" required v-model="title" />
     <label>Content:</label>
-    <textarea required v-model="body"></textarea>
+    <textarea ref="textareaRef" required v-model="body"></textarea>
     <label>Tags: (hit enter to add tag)</label>
     <input type="text" v-model="tag" @keydown.enter.prevent="handleKeydown" />
     <div v-for="tag in tags" :key="tag" class="pill">#{{ tag }}</div>
@@ -22,9 +22,9 @@
 import Spinner from '../components/Spinner.vue';
 import { useRoute } from 'vue-router';
 import getPost from '../composables/getPost';
-import { ref, onMounted } from 'vue';
+import { ref, onMounted, watch, nextTick } from 'vue';
 import app from '../firebase/config';
-import { getFirestore, collection, updateDoc, doc } from 'firebase/firestore';
+import { getFirestore, updateDoc, doc } from 'firebase/firestore';
 export default {
   components: { Spinner },
 
@@ -35,18 +35,16 @@ export default {
     const tags = ref([]);
     const route = useRoute();
     const { post, error, load } = getPost(route.params.id);
+    const textareaRef = ref(null);
 
-    onMounted(async () => {
-      try {
-        await load();
+    const autoResize = () => {
+      const el = textareaRef.value;
 
-        title.value = post.value.title;
-        body.value = post.value.body;
-        tags.value = post.value.tags;
-      } catch (err) {
-        console.error(err);
+      if (el) {
+        el.style.height = 'auto';
+        el.style.height = el.scrollHeight + 'px';
       }
-    });
+    };
 
     const handleKeydown = () => {
       if (!tags.value.includes(tag.value)) {
@@ -70,9 +68,43 @@ export default {
         error.value = err.message;
       }
     };
-    return { title, body, tags, tag, post, error, handleSubmit, handleKeydown };
+
+    onMounted(async () => {
+      try {
+        await load();
+
+        title.value = post.value.title;
+        body.value = post.value.body;
+        tags.value = post.value.tags;
+        await nextTick();
+        autoResize();
+      } catch (err) {
+        console.error(err);
+      }
+    });
+    watch(body, async () => {
+      await nextTick();
+      autoResize();
+    });
+
+    return {
+      title,
+      body,
+      tags,
+      tag,
+      post,
+      error,
+      handleSubmit,
+      handleKeydown,
+      textareaRef,
+      autoResize,
+    };
   },
 };
 </script>
 
-<style></style>
+<style scoped>
+h1 {
+  text-align: center;
+}
+</style>

@@ -6,7 +6,7 @@
       <label>Content:</label>
       <textarea required v-model="body"></textarea>
       <label>Tags: (hit enter to add tag)</label>
-      <input type="text" v-model="tag" @keydown.enter.prevent="handleKeydown" />
+      <input type="text" v-model="tag" />
       <div v-for="tag in tags" :key="tag" class="pill">#{{ tag }}</div>
       <button>Add Post</button>
     </form>
@@ -20,7 +20,7 @@
 import { ref } from 'vue';
 import addPost from '../composables/addPost';
 import { useRouter } from 'vue-router';
-import getPost from '../composables/getPost';
+
 export default {
   setup() {
     const title = ref('');
@@ -64,7 +64,8 @@ form {
 input,
 textarea {
   display: block;
-  width: 100%;
+  min-width: 100%;
+  max-width: 100%;
   margin: 10px auto;
   box-sizing: border-box;
   padding: 10px;
@@ -98,7 +99,8 @@ label::before {
 }
 
 textarea {
-  height: 150px;
+  min-height: 150px;
+  height: fit-content;
 }
 
 .pill {

@@ -5,6 +5,7 @@ import Create from '@/views/Create.vue';
 import Tag from '@/views/Tag.vue';
 import RealTime from '@/views/RealTime.vue';
 import Edit from '@/views/Edit.vue';
+import Gallery from '@/views/Gallery.vue';
 
 const routes = [
   {
@@ -33,6 +34,11 @@ const routes = [
     path: '/edit/:id',
     name: 'Edit',
     component: Edit,
+  },
+  {
+    path: '/gallery',
+    name: 'Gallery',
+    component: Gallery,
   },
   {
     path: '/realtime',
