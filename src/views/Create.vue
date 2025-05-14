@@ -3,8 +3,14 @@
     <form @submit.prevent="handleSubmit">
       <label>Title:</label>
       <input type="text" required v-model="title" />
+      <label>Thumbnail source:</label>
+      <input type="text" v-model="thumbnail" />
+      <label>Quote:</label>
+      <input type="text" v-model="quote" />
+      <label>Quote origin:</label>
+      <input type="text" v-model="quoteOrigin" />
       <label>Content:</label>
-      <textarea required v-model="body"></textarea>
+      <textarea ref="textareaRef" required v-model="body"></textarea>
       <label>Tags: (hit enter to add tag)</label>
       <input type="text" v-model="tag" @keydown.enter.prevent="handleKeydown" />
       <div v-for="tag in tags" :key="tag" class="pill">#{{ tag }}</div>
@@ -17,16 +23,22 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, watch, nextTick } from 'vue';
 import addPost from '../composables/addPost';
 import { useRouter } from 'vue-router';
 
 export default {
   setup() {
     const title = ref('');
+    const thumbnail = ref('');
+    const quote = ref('');
+    const quoteOrigin = ref('');
     const body = ref('');
     const tag = ref('');
     const tags = ref([]);
+    const router = useRouter();
+    const textareaRef = ref(null);
+
     const handleKeydown = () => {
       if (!tags.value.includes(tag.value)) {
         tag.value = tag.value.replace(/\ s/, '');
@@ -34,12 +46,23 @@ export default {
       }
       tag.value = '';
     };
-    const router = useRouter();
+
+    const autoResize = () => {
+      const el = textareaRef.value;
+
+      if (el) {
+        el.style.height = 'auto';
+        el.style.height = el.scrollHeight + 5 + 'px';
+      }
+    };
+
     const handleSubmit = async () => {
       const post = {
         title: title.value,
         body: body.value,
         tags: tags.value,
+        quote: quote.value,
+        quoteOrigin: quoteOrigin.value,
       };
       try {
         add(post);
@@ -49,14 +72,32 @@ export default {
       }
     };
     const { error, add } = addPost();
-    return { title, body, tag, handleKeydown, tags, handleSubmit, error };
+    watch(body, async () => {
+      await nextTick();
+      autoResize();
+    });
+
+    return {
+      title,
+      body,
+      tag,
+      handleKeydown,
+      tags,
+      handleSubmit,
+      autoResize,
+      error,
+      quoteOrigin,
+      quote,
+      thumbnail,
+      textareaRef,
+    };
   },
 };
 </script>
 
 <style>
 form {
-  max-width: 400px;
+  max-width: 500px;
   margin: 0 auto;
   text-align: left;
 }

@@ -1,6 +1,6 @@
 <template>
   <div class="uploader">
-    <div class="gallery">
+    <div data-testid="gallery" class="gallery">
       <div v-for="(img, index) in imageUrls" :key="index" class="thumbnail">
         <img :src="img" alt="uploaded image" @click="showImage(img, index)" />
       </div>
@@ -20,6 +20,7 @@
 import { ref } from 'vue';
 
 import SingleImage from '../components/SingleImage.vue';
+import { loadImages } from '../composables/loadImages';
 export default {
   components: { SingleImage },
   setup() {
@@ -33,12 +34,7 @@ export default {
       imageIndex.value = index;
     };
 
-    const requireImages = require.context(
-      '@/assets/images',
-      false,
-      /\.(png|jpe?g)$/
-    );
-    const imageUrls = requireImages.keys().map((key) => requireImages(key));
+    const imageUrls = loadImages();
 
     return { imageUrls, showSingleImage, showImage, src, imageIndex };
   },
@@ -58,9 +54,10 @@ export default {
 .thumbnail img {
   width: 350px;
   height: 350px;
-  object-fit: cover;
+  object-fit: contain;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  cursor: pointer;
 }
 
 .gallery {

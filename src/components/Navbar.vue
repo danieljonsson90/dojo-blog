@@ -1,6 +1,6 @@
 <template>
   <header>
-    <h1>Vietnam Blogg</h1>
+    <h1>Vietnam</h1>
     <nav>
       <router-link :to="{ name: 'Home' }">Home</router-link>
       <router-link :to="{ name: 'Create' }">Create Post</router-link>
@@ -18,7 +18,7 @@ nav a {
   display: inline-block;
   text-decoration: none;
   margin: 20px;
-  color: #bbb;
+  color: white;
   padding: 5px;
   font-size: 20px;
 }
@@ -38,8 +38,9 @@ header {
   padding: 10px;
   height: 15rem;
 }
+
 header h1 {
-  color: #dfdfdf;
+  color: white;
   font-size: 48px;
 }
 </style>

@@ -17,7 +17,6 @@ export default {
     const copyPosts = ref([]);
     copyPosts.value = props.posts;
     const handleDelete = (id) => {
-      debugger;
       copyPosts.value = copyPosts.value.filter((p) => p.id !== id);
     };
     return { handleDelete, copyPosts };

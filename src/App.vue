@@ -41,4 +41,10 @@ body {
 
   padding: 2rem;
 }
+
+blockquote {
+  line-height: 1.4;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
 </style>

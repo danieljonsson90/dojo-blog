@@ -1,5 +1,5 @@
 <template>
-  <div class="home">
+  <div data-testid="home" class="home">
     <div v-if="error">error:{{ error }}</div>
     <div v-if="posts.length" class="layout">
       <PostList :posts="posts" />

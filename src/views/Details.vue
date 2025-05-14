@@ -1,7 +1,14 @@
 <template>
   <div v-if="error">{{ error }}</div>
-  <div v-if="post" class="post">
+  <div v-if="post" class="post details">
     <h3>{{ post.title }}</h3>
+    <blockquote
+      class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow"
+      v-if="post.quote"
+    >
+      <p>{{ post.quote }}</p>
+      <cite>— {{ post.quoteOrigin }}</cite>
+    </blockquote>
     <p class="pre">{{ post.body }}</p>
     <div class="details-actions">
       <button @click="showModal = true">Delete post</button>
@@ -56,8 +63,13 @@ h1 {
 }
 .post p {
   color: #444;
-  line-height: 1.5rem;
   margin-top: 40px;
+}
+
+.details p {
+  line-height: 1.8;
+  font-weight: 500;
+  font-size: 1.5rem;
 }
 
 .pre {
@@ -75,5 +87,9 @@ h1 {
 .post .details-actions {
   width: 100%;
   text-align: right;
+}
+
+.details {
+  max-width: 800px;
 }
 </style>

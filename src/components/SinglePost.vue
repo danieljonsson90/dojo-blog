@@ -3,8 +3,26 @@
     <router-link :to="{ name: 'Details', params: { id: post.id } }">
       <h3>{{ post.title }}</h3>
     </router-link>
+    <div class="post-header">
+      <div class="thumbnail" v-if="post.thumbnail">
+        <img :src="post.thumbnail" alt="uploaded image" />
+      </div>
+      <blockquote
+        class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow"
+        v-if="post.quote"
+      >
+        <p>"{{ post.quote }}"</p>
+        <cite v-if="post.quoteOrigin">— {{ post.quoteOrigin }}</cite>
+      </blockquote>
+    </div>
+
     <div class="post-content">
-      <p>{{ snippet }}</p>
+      <p>
+        {{ snippet }}
+        <router-link :to="{ name: 'Details', params: { id: post.id } }">
+          Läs mer
+        </router-link>
+      </p>
       <div class="actions">
         <router-link :to="{ name: 'Edit', params: { id: post.id } }">
           <span class="material-icons">edit</span>
@@ -38,6 +56,7 @@ export default {
     const snippet = computed(() => {
       return props.post.body.substring(0, 300) + '....';
     });
+
     const showModal = ref(false);
     const { errorRemove, remove } = removePost();
     const handleDelete = () => {
@@ -51,6 +70,10 @@ export default {
 </script>
 
 <style>
+.post-header {
+  display: flex;
+  margin-top: 3rem;
+}
 .post {
   margin: 0 40px 30px;
   padding-bottom: 30px;
@@ -78,17 +101,24 @@ export default {
   left: -20px;
   transform: rotate(-1deg);
 }
-
-.post button {
-  /* position: absolute;
-  left: 80%;
-  bottom: 3%; */
+.post-content a {
+  color: #ff8800;
+}
+.thumbnail img {
+  width: 200px;
+  min-height: 200px;
+  object-fit: cover;
+  border-radius: 8px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 .post-content {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  line-height: 1.4;
+  font-weight: 400;
+  font-size: 1.2rem;
 }
 
 .post-content .actions {

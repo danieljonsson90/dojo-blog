@@ -2,6 +2,12 @@
   <form @submit.prevent="handleSubmit" v-if="post">
     <label>Title:</label>
     <input type="text" required v-model="title" />
+    <label>Thumbnail source:</label>
+    <input type="text" v-model="thumbnail" />
+    <label>Quote:</label>
+    <input type="text" v-model="quote" />
+    <label>Quote origin:</label>
+    <input type="text" v-model="quoteOrigin" />
     <label>Content:</label>
     <textarea ref="textareaRef" required v-model="body"></textarea>
     <label>Tags: (hit enter to add tag)</label>
@@ -19,7 +25,7 @@
 
 <script>
 import Spinner from '../components/Spinner.vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import getPost from '../composables/getPost';
 import { ref, onMounted, watch, nextTick } from 'vue';
 import app from '../firebase/config';
@@ -29,10 +35,15 @@ export default {
 
   setup() {
     const title = ref('');
+    const thumbnail = ref('');
+    const quote = ref('');
+    const quoteOrigin = ref('');
     const body = ref('');
     const tag = ref('');
     const tags = ref([]);
+
     const route = useRoute();
+    const router = useRouter();
     const { post, error, load } = getPost(route.params.id);
     const textareaRef = ref(null);
 
@@ -41,7 +52,7 @@ export default {
 
       if (el) {
         el.style.height = 'auto';
-        el.style.height = el.scrollHeight + 'px';
+        el.style.height = el.scrollHeight + 5 + 'px';
       }
     };
 
@@ -57,13 +68,16 @@ export default {
         title: title.value,
         body: body.value,
         tags: tags.value,
+        quote: quote.value,
+        quoteOrigin: quoteOrigin.value,
+        thumbnail: thumbnail.value,
       };
       try {
         const db = getFirestore(app);
         const docRef = doc(db, 'posts', post.value.id);
         await updateDoc(docRef, updatedPost);
+        router.push('/');
       } catch (err) {
-        debugger;
         error.value = err.message;
       }
     };
@@ -71,10 +85,12 @@ export default {
     onMounted(async () => {
       try {
         await load();
-
         title.value = post.value.title;
         body.value = post.value.body;
         tags.value = post.value.tags;
+        quote.value = post.value.quote;
+        quoteOrigin.value = post.value.quoteOrigin;
+        thumbnail.value = post.value.thumbnail ?? '';
         await nextTick();
         autoResize();
       } catch (err) {
@@ -97,6 +113,9 @@ export default {
       handleKeydown,
       textareaRef,
       autoResize,
+      thumbnail,
+      quote,
+      quoteOrigin,
     };
   },
 };
