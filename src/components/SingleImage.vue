@@ -63,34 +63,38 @@ export default {
   padding: 2rem;
   border-radius: 10px;
   position: relative;
-  min-width: 50rem;
-  min-height: 40rem;
+  min-width: 50vw;
+  max-height: 70vh;
   text-align: center;
 }
 .image-content img {
-  width: 700px;
-  height: 700px;
+  max-width: 70vw;
+  max-height: 70vh;
+  width: auto;
+  height: auto;
   object-fit: contain;
   border-radius: 8px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
-.material-icons {
+.image-content .material-icons {
   font-weight: bold;
   font-size: 28px;
+  color: #bbb;
+  cursor: pointer;
 }
 .image-content .material-icons.close {
   position: absolute;
-  bottom: 94%;
-  left: 92%;
+  top: 0.2rem;
+  right: 0.2rem;
 }
 .image-content .material-icons.right {
   position: absolute;
   bottom: 50%;
-  left: 92%;
+  right: 0.2rem;
 }
 .image-content .material-icons.left {
   position: absolute;
   bottom: 50%;
-  left: 2%;
+  left: 0.1rem;
 }
 </style>
