@@ -100,7 +100,7 @@ header h1 {
   nav .links.small {
     display: flex; /* show when 'small' class is active */
     flex-direction: row;
-    margin-top: 8%;
+    margin-top: 2rem;
     justify-content: space-around;
   }
   .icon {
