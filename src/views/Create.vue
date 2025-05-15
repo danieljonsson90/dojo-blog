@@ -97,9 +97,13 @@ export default {
 
 <style>
 form {
+  text-align: left;
+  margin: 0 15px;
+}
+
+.create {
   max-width: 500px;
   margin: 0 auto;
-  text-align: left;
 }
 
 input,

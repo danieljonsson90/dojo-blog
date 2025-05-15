@@ -25,7 +25,7 @@
       </p>
       <div class="actions">
         <router-link :to="{ name: 'Edit', params: { id: post.id } }">
-          <span class="material-icons">edit</span>
+          <span class="material-icons edit">edit</span>
         </router-link>
         <span @click="showModal = true" class="material-icons">delete</span>
       </div>
@@ -127,11 +127,36 @@ export default {
   text-align: right;
 }
 
-.material-icons {
+.post-content .material-icons {
   display: inline-block;
   margin-left: 15px;
   cursor: pointer;
   font-size: 24px;
   color: #bbb;
+}
+
+@media (max-width: 768px) {
+  .post-header {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: center;
+  }
+  blockquote {
+    margin: 0 auto;
+  }
+  .post-content {
+    flex-wrap: wrap;
+  }
+
+  .post-content .actions {
+    margin: 10px 10px 10px 0;
+    width: 100%;
+    text-align: right;
+  }
+  .material-icons.edit {
+    margin-left: 0;
+  }
 }
 </style>

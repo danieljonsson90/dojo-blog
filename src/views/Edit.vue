@@ -1,25 +1,27 @@
 <template>
-  <form @submit.prevent="handleSubmit" v-if="post">
-    <label>Title:</label>
-    <input type="text" required v-model="title" />
-    <label>Thumbnail source:</label>
-    <input type="text" v-model="thumbnail" />
-    <label>Quote:</label>
-    <input type="text" v-model="quote" />
-    <label>Quote origin:</label>
-    <input type="text" v-model="quoteOrigin" />
-    <label>Content:</label>
-    <textarea ref="textareaRef" required v-model="body"></textarea>
-    <label>Tags: (hit enter to add tag)</label>
-    <input type="text" v-model="tag" @keydown.enter.prevent="handleKeydown" />
-    <div v-for="tag in tags" :key="tag" class="pill">#{{ tag }}</div>
-    <button>Update Post</button>
-  </form>
-  <div v-else>
-    <Spinner v-if="!error" />
-  </div>
-  <div class="error">
-    {{ error }}
+  <div class="edit-post">
+    <form @submit.prevent="handleSubmit" v-if="post">
+      <label>Title:</label>
+      <input type="text" required v-model="title" />
+      <label>Thumbnail source:</label>
+      <input type="text" v-model="thumbnail" />
+      <label>Quote:</label>
+      <input type="text" v-model="quote" />
+      <label>Quote origin:</label>
+      <input type="text" v-model="quoteOrigin" />
+      <label>Content:</label>
+      <textarea ref="textareaRef" required v-model="body"></textarea>
+      <label>Tags: (hit enter to add tag)</label>
+      <input type="text" v-model="tag" @keydown.enter.prevent="handleKeydown" />
+      <div v-for="tag in tags" :key="tag" class="pill">#{{ tag }}</div>
+      <button>Update Post</button>
+    </form>
+    <div v-else>
+      <Spinner v-if="!error" />
+    </div>
+    <div class="error">
+      {{ error }}
+    </div>
   </div>
 </template>
 
@@ -124,5 +126,15 @@ export default {
 <style scoped>
 h1 {
   text-align: center;
+}
+
+form {
+  text-align: left;
+  margin: 0 15px;
+}
+
+.edit-post {
+  max-width: 500px;
+  margin: 0 auto;
 }
 </style>

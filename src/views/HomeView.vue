@@ -40,4 +40,14 @@ export default {
   grid-template-columns: 3fr 1fr;
   gap: 20px;
 }
+
+@media (max-width: 768px) {
+  .layout {
+    display: flex;
+    flex-direction: row-reverse;
+    flex-wrap: wrap-reverse;
+    align-items: center;
+    justify-content: center;
+  }
+}
 </style>

@@ -64,4 +64,36 @@ export default {
   margin: 0 auto;
   max-width: 1200px;
 }
+@media (max-width: 1170px) {
+  .thumbnail img {
+    width: 300px;
+    height: 300px;
+  }
+}
+@media (max-width: 970px) {
+  .thumbnail img {
+    width: 250px;
+    height: 250px;
+  }
+}
+@media (max-width: 830px) {
+  .thumbnail img {
+    width: 200px;
+    height: 200px;
+  }
+}
+
+@media (max-width: 680px) {
+  .thumbnail img {
+    width: 175px;
+    height: 175px;
+  }
+}
+
+@media (max-width: 585px) {
+  .thumbnail img {
+    width: 150px;
+    height: 150px;
+  }
+}
 </style>

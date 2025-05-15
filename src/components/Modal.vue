@@ -43,7 +43,11 @@ export default {
   border-radius: 10px;
   position: relative;
   z-index: 1000;
+  margin-right: 30px;
+  margin-left: 10px;
+  width: auto;
 }
+
 .modal-content button {
   margin-top: 1rem;
 }
@@ -65,5 +69,6 @@ export default {
   bottom: 75%;
   right: 2%;
   margin: 0;
+  color: #d3d3d3;
 }
 </style>

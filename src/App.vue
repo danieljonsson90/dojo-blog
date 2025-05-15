@@ -1,5 +1,5 @@
 <template>
-  <Navbar class="nav" />
+  <Navbar class="nav-container" />
   <div class="content">
     <router-view />
   </div>
@@ -33,7 +33,7 @@ body {
   flex: 1; /* This takes up the remaining space */
 }
 
-.nav {
+.nav-container {
   background-image: url('@/assets/images/0AA5D7C5-0660-44F8-A6AE-AD474C393690.jpg'); /* adjust path */
   background-size: cover;
   background-position: center;
