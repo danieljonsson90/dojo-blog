@@ -1,5 +1,5 @@
 <template>
-  <spin class="spin"></spin>
+  <div class="spin"></div>
 </template>
 
 <script>
