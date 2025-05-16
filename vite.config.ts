@@ -16,7 +16,7 @@ export default defineConfig({
     exclude: [
       ...configDefaults.exclude,
       'tests/**', // ✅ ignore folder
-      'tests/example.spec.ts', // ✅ or specific file
+      'tests-examples/**', // ✅ ignore folder
     ],
   },
 });
