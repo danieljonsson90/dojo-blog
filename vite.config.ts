@@ -12,5 +12,9 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'happy-dom',
+    exclude: [
+      'tests/**', // ✅ ignore folder
+      'tests/example.spec.ts', // ✅ or specific file
+    ],
   },
 });
