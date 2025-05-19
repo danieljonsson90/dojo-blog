@@ -21,8 +21,9 @@ jobs:
         run: npx playwright install --with-deps
       - name: Serve built app
         run: |
-          npm install -g serve
+          npm install -g serve wait-on
           serve -s dist -l 4173 &
+          wait-on http://localhost:4173
       - name: Run Playwright tests
         run: npx playwright test
       - uses: actions/upload-artifact@v4
