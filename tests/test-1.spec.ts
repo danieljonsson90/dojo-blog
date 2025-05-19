@@ -4,7 +4,7 @@ test.describe('Navigation', () => {
   test('test', async ({ page }) => {
     const baseURL = process.env.BASE_URL;
     await page.goto(baseURL);
-    await page.getByRole('link', { name: 'Edit' }).first().click();
+    await page.getByRole('link', { name: 'edit' }).first().click();
     await expect(
       page.getByRole('button', { name: 'Update Post' })
     ).toBeVisible();
