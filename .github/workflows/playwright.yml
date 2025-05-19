@@ -22,7 +22,7 @@ jobs:
       - name: Serve built app
         run: |
           npm install -g serve wait-on
-          serve -s dist -l 4173 &
+          serve -s dist -l 4173 --single &
           wait-on http://localhost:4173
       - name: Run Playwright tests
         run: npx playwright test
