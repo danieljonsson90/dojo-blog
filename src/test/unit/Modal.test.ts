@@ -29,19 +29,6 @@ describe('Modal.vue', () => {
     expect(wrapper.text()).not.toContain('Här är slotinnehåll');
   });
 
-  it('Modal visas inte när show är false', () => {
-    const wrapper = mount(Modal, {
-      props: {
-        show: false,
-      },
-      slots: {
-        default: 'Här är slotinnehåll',
-      },
-    });
-
-    expect(wrapper.text()).not.toContain('Här är slotinnehåll');
-  });
-
   it('skickar event när close knapp klickas utan att något värde emittas', async () => {
     const wrapper = mount(Modal, {
       props: {
