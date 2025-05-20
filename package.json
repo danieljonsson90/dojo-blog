@@ -6,7 +6,9 @@
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
     "test": "vitest",
-    "test:ui": "vitest --ui"
+    "test:ui": "vitest --ui",
+    "preview": "vite preview",
+    "start": "vite preview"
   },
   "dependencies": {
     "core-js": "^3.8.3",
