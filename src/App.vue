@@ -38,7 +38,6 @@ body {
   background-size: cover;
   background-position: center;
   color: white;
-
   padding: 2rem;
 }
 

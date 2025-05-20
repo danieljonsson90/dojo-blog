@@ -66,7 +66,7 @@ export default {
       };
       try {
         add(post);
-        router.push('/');
+        router.push('/posts');
       } catch (err) {
         error.value = err.message;
       }

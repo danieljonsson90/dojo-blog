@@ -6,6 +6,7 @@ import Tag from '@/views/Tag.vue';
 import RealTime from '@/views/RealTime.vue';
 import Edit from '@/views/Edit.vue';
 import Gallery from '@/views/Gallery.vue';
+import PostsView from '@/views/PostsView.vue';
 
 const routes = [
   {
@@ -39,6 +40,11 @@ const routes = [
     path: '/gallery',
     name: 'Gallery',
     component: Gallery,
+  },
+  {
+    path: '/posts',
+    name: 'Posts',
+    component: PostsView,
   },
   {
     path: '/realtime',

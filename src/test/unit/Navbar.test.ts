@@ -4,11 +4,13 @@ import App from '../../App.vue';
 import HomeView from '../../views/HomeView.vue';
 import Gallery from '../../views/Gallery.vue';
 import Create from '../../views/Create.vue';
+import PostsView from '../../views/PostsView.vue';
 import { describe, it, expect, beforeEach, vi } from 'vitest';
 
 export const routes = [
   { path: '/', name: 'Home', component: HomeView },
   { path: '/gallery', name: 'Gallery', component: Gallery },
+  { path: '/posts', name: 'Posts', component: PostsView },
   {
     path: '/create',
     name: 'Create',

@@ -1,30 +1,16 @@
 <template>
   <div data-testid="home" class="home">
-    <div v-if="error">error:{{ error }}</div>
-    <div v-if="posts.length" class="layout">
-      <PostList :posts="posts" />
-      <TagCloud :posts="posts" />
-    </div>
-    <div v-else>
-      <Spinner v-if="!error" />
-    </div>
+    <h1>Mitt utbyte i Vietnam</h1>
+    <p>Välkommna till min blogg!</p>
+    <p>Här kan ni läsa om min resa och upplevelse av mitt utbyte i Vietnam</p>
   </div>
 </template>
 
 <script>
-import PostList from '../components/PostList.vue';
-import getPosts from '../composables/getPosts';
-import Spinner from '../components/Spinner.vue';
-import TagCloud from '@/components/TagCloud.vue';
 export default {
   name: 'HomeView',
-  components: { PostList, Spinner, TagCloud },
-  setup() {
-    const { posts, error, load } = getPosts();
-    load();
-
-    return { posts, error };
-  },
+  components: {},
+  setup() {},
 };
 </script>
 
@@ -33,6 +19,7 @@ export default {
   max-width: 1200px;
   margin: 0 auto;
   padding: 10px;
+  text-align: center;
 }
 
 .layout {

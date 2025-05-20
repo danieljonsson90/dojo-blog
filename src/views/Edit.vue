@@ -78,7 +78,7 @@ export default {
         const db = getFirestore(app);
         const docRef = doc(db, 'posts', post.value.id);
         await updateDoc(docRef, updatedPost);
-        router.push('/');
+        router.push('/posts');
       } catch (err) {
         error.value = err.message;
       }

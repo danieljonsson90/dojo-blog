@@ -1,20 +1,22 @@
 <template>
   <div v-if="error">{{ error }}</div>
-  <div v-if="post" class="post details">
-    <h3>{{ post.title }}</h3>
-    <blockquote
-      class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow"
-      v-if="post.quote"
-    >
-      <p>{{ post.quote }}</p>
-      <cite>— {{ post.quoteOrigin }}</cite>
-    </blockquote>
-    <p class="pre">{{ post.body }}</p>
-    <div class="details-actions">
-      <button @click="showModal = true">Delete post</button>
-      <router-link :to="{ name: 'Edit', params: { id: post.id } }">
-        <button>Edit post</button>
-      </router-link>
+  <div v-if="post" class="details">
+    <div data-testid="details" class="post">
+      <h3>{{ post.title }}</h3>
+      <blockquote
+        class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow"
+        v-if="post.quote"
+      >
+        <p>{{ post.quote }}</p>
+        <cite>— {{ post.quoteOrigin }}</cite>
+      </blockquote>
+      <p class="pre">{{ post.body }}</p>
+      <div class="details-actions">
+        <button @click="showModal = true">Delete post</button>
+        <router-link :to="{ name: 'Edit', params: { id: post.id } }">
+          <button>Edit post</button>
+        </router-link>
+      </div>
     </div>
   </div>
   <div v-else>
@@ -91,5 +93,10 @@ h1 {
 
 .details {
   max-width: 800px;
+  margin: 3rem auto;
+}
+
+.details .post {
+  border-bottom: none;
 }
 </style>
