@@ -69,17 +69,17 @@ test.describe('Formulärinmatning och validering', () => {
   });
 
   test('Skapa och ta bort ett inlägg', async ({ page }) => {
-    await createDefaultPost(page);
-    await removeDefaultPost(page, post);
+    await createAndCheckDefaultPost(page);
+    await removeAndCheckDefaultPost(page, post);
   });
   test('Skapa, uppdatera och ta bort inlägg', async ({ page }) => {
-    await createDefaultPost(page);
-    await updateDefaultPost(page);
-    await removeDefaultPost(page, updatePost);
+    await createAndCheckDefaultPost(page);
+    await updateAndCheckDefaultPost(page);
+    await removeAndCheckDefaultPost(page, updatePost);
   });
 });
 
-async function createDefaultPost(page: Page) {
+async function createAndCheckDefaultPost(page: Page) {
   await page.getByRole('link', { name: 'Create Post' }).click();
   await page.locator('input[type="text"]').first().click();
   await page.locator('input[type="text"]').first().fill(post.title);
@@ -97,13 +97,13 @@ async function createDefaultPost(page: Page) {
   await expect(page.getByText(post.title)).toBeVisible();
 }
 
-async function removeDefaultPost(page: Page, post) {
+async function removeAndCheckDefaultPost(page: Page, post) {
   await page.getByText('delete').first().click();
   await page.getByRole('button', { name: 'Ta bort' }).click();
   await expect(page.getByText(post.title)).not.toBeVisible();
 }
 
-async function updateDefaultPost(page: Page) {
+async function updateAndCheckDefaultPost(page: Page) {
   await page.getByRole('link', { name: 'edit' }).first().click();
   await page.locator('input[type="text"]').first().click();
   await page.locator('input[type="text"]').first().fill(updatePost.title);
