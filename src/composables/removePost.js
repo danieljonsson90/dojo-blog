@@ -9,6 +9,7 @@ const removePost = () => {
     try {
       const db = getFirestore(app);
       await deleteDoc(doc(db, 'posts', id));
+      return true;
     } catch (err) {
       error.value = err.message;
     }

@@ -59,12 +59,14 @@ export default {
 
     const showModal = ref(false);
     const { errorRemove, remove } = removePost();
-    const handleDelete = () => {
-      remove(props.post.id);
-      emit('delete', props.post.id);
-      showModal.value = false;
+    const handleDelete = async () => {
+      const removed = await remove(props.post.id);
+      if (removed) {
+        emit('delete', props.post.id);
+        showModal.value = false;
+      }
     };
-    return { snippet, handleDelete, showModal };
+    return { snippet, handleDelete, showModal, errorRemove };
   },
 };
 </script>
