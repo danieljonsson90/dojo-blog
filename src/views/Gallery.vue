@@ -18,7 +18,6 @@
 
 <script>
 import { ref } from 'vue';
-
 import SingleImage from '../components/SingleImage.vue';
 import { loadImages } from '../composables/loadImages';
 export default {
