@@ -35,7 +35,6 @@ test.describe('Navigation', () => {
 
     // Expects page to have a heading with the name of Installation.
     await expect(page.getByRole('button', { name: 'Add Post' })).toBeVisible();
-
     await expect(page).toHaveURL(baseURL + 'create');
   });
 
@@ -45,7 +44,6 @@ test.describe('Navigation', () => {
 
     // Expects page to have a testId Gallery
     await expect(page.getByTestId('gallery')).toBeVisible();
-
     await expect(page).toHaveURL(baseURL + 'gallery');
   });
 
@@ -66,16 +64,29 @@ test.describe('Formulärinmatning och validering', () => {
   const baseURL = process.env.BASE_URL;
   test.beforeEach(async ({ page }) => {
     await page.goto(baseURL + 'posts');
+    // await resetEnvironmentForTests(page);
   });
 
   test('Skapa och ta bort ett inlägg', async ({ page }) => {
     await createAndCheckDefaultPost(page);
+    await expect(page.getByTestId('posts')).toBeVisible();
+    await expect(page.getByText(post.title)).toBeVisible();
+
     await removeAndCheckDefaultPost(page, post);
+    await expect(page.getByText(post.title)).not.toBeVisible();
   });
   test('Skapa, uppdatera och ta bort inlägg', async ({ page }) => {
     await createAndCheckDefaultPost(page);
+    await expect(page.getByTestId('posts')).toBeVisible();
+    await expect(page.getByText(post.title)).toBeVisible();
+
     await updateAndCheckDefaultPost(page);
+    await expect(page.getByTestId('posts')).toBeVisible();
+    await expect(page.getByText(updatePost.title)).toBeVisible();
+    await expect(page.getByText(updatePost.body)).toBeVisible();
+
     await removeAndCheckDefaultPost(page, updatePost);
+    await expect(page.getByText(post.title)).not.toBeVisible();
   });
 });
 
@@ -93,14 +104,20 @@ async function createAndCheckDefaultPost(page: Page) {
   await page.locator('input[type="text"]').nth(4).fill(post.tag);
   await page.locator('input[type="text"]').nth(4).press('Enter');
   await page.getByRole('button', { name: 'Add Post' }).click();
-  await expect(page.getByTestId('posts')).toBeVisible();
-  await expect(page.getByText(post.title)).toBeVisible();
 }
+
+// async function resetEnvironmentForTests(page: Page) {
+//   if (page.getByText(post.title).isVisible()) {
+//     debugger;
+//     await page.getByText('delete').first().click();
+//     await page.getByRole('button', { name: 'Ta bort' }).click();
+//     await expect(page.getByText(post.title)).not.toBeVisible();
+//   }
+// }
 
 async function removeAndCheckDefaultPost(page: Page, post) {
   await page.getByText('delete').first().click();
   await page.getByRole('button', { name: 'Ta bort' }).click();
-  await expect(page.getByText(post.title)).not.toBeVisible();
 }
 
 async function updateAndCheckDefaultPost(page: Page) {
@@ -113,7 +130,4 @@ async function updateAndCheckDefaultPost(page: Page) {
 
   await page.locator('textarea').fill(updatePost.body);
   await page.getByRole('button', { name: 'Update Post' }).click();
-  await expect(page.getByTestId('posts')).toBeVisible();
-  await expect(page.getByText(updatePost.title)).toBeVisible();
-  await expect(page.getByText(updatePost.body)).toBeVisible();
 }

@@ -1,6 +1,8 @@
 export function loadImages() {
-  const images = import.meta.glob('@/assets/images/*.(png|jpe?g||JPE?G|svg)', {
-    eager: true,
-  });
-  return images;
+  const req = require.context(
+    '@/assets/images',
+    false,
+    /\.(png|jpe?g||JPE?G|svg)$/
+  );
+  return req.keys().map(req);
 }
