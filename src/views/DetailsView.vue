@@ -33,10 +33,10 @@
 
 <script>
 import getPost from '../composables/getPost';
-import Spinner from '../components/Spinner.vue';
+import Spinner from '../components/AppSpinner.vue';
 import removePost from '../composables/removePost';
 import { useRouter } from 'vue-router';
-import Modal from '@/components/Modal.vue';
+import Modal from '@/components/RemoveModal.vue';
 import { ref } from 'vue';
 export default {
   props: ['id'],
@@ -52,7 +52,7 @@ export default {
       router.push('/');
     };
 
-    return { post, error, handleDelete, showModal };
+    return { post, error, handleDelete, showModal, errorRemove };
   },
 };
 </script>

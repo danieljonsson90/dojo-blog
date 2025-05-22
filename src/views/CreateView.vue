@@ -41,7 +41,7 @@ export default {
 
     const handleKeydown = () => {
       if (!tags.value.includes(tag.value)) {
-        tag.value = tag.value.replace(/\ s/, '');
+        tag.value = tag.value.replace(/ s/, '');
         tags.value.push(tag.value);
       }
       tag.value = '';

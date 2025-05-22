@@ -26,7 +26,7 @@
 </template>
 
 <script>
-import Spinner from '../components/Spinner.vue';
+import Spinner from '../components/AppSpinner.vue';
 import { useRoute, useRouter } from 'vue-router';
 import getPost from '../composables/getPost';
 import { ref, onMounted, watch, nextTick } from 'vue';
@@ -60,7 +60,7 @@ export default {
 
     const handleKeydown = () => {
       if (!tags.value.includes(tag.value)) {
-        tag.value = tag.value.replace(/\ s/, '');
+        tag.value = tag.value.replace(/ s/, '');
         tags.value.push(tag.value);
       }
       tag.value = '';

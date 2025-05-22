@@ -1,11 +1,11 @@
 import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
-import Details from '../views/Details.vue';
-import Create from '@/views/Create.vue';
-import Tag from '@/views/Tag.vue';
+import Details from '../views/DetailsView.vue';
+import Create from '@/views/CreateView.vue';
+import Tag from '@/views/TagView.vue';
 import RealTime from '@/views/RealTime.vue';
-import Edit from '@/views/Edit.vue';
-import Gallery from '@/views/Gallery.vue';
+import Edit from '@/views/EditView.vue';
+import Gallery from '@/views/GalleryView.vue';
 import PostsView from '@/views/PostsView.vue';
 
 const routes = [

@@ -1,6 +1,6 @@
-import { describe, it, expect, vi } from 'vitest';
+import { describe, it, expect } from 'vitest';
 import { mount } from '@vue/test-utils';
-import Modal from '../../components/Modal.vue';
+import Modal from '../../components/RemoveModal.vue';
 
 describe('Modal.vue', () => {
   it('Modal visas och innehåller slottext', () => {

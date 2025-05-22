@@ -46,7 +46,7 @@
 <script>
 import { computed } from 'vue';
 import removePost from '../composables/removePost';
-import Modal from '@/components/Modal.vue';
+import Modal from '@/components/RemoveModal.vue';
 import { ref } from 'vue';
 export default {
   props: ['post'],
@@ -66,7 +66,7 @@ export default {
         showModal.value = false;
       }
     };
-    return { snippet, handleDelete, showModal, errorRemove };
+    return { snippet, handleDelete, showModal };
   },
 };
 </script>

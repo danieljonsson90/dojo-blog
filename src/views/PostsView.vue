@@ -14,7 +14,7 @@
 <script>
 import PostList from '../components/PostList.vue';
 import getPosts from '../composables/getPosts';
-import Spinner from '../components/Spinner.vue';
+import Spinner from '../components/AppSpinner.vue';
 import TagCloud from '@/components/TagCloud.vue';
 export default {
   name: 'HomeView',

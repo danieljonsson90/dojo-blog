@@ -1,5 +1,4 @@
 <template>
-  <h1>Tag</h1>
   <div class="tag">
     <div v-if="error">error:{{ error }}</div>
     <div v-if="posts.length" class="layout">
@@ -14,7 +13,7 @@
 import { computed } from 'vue';
 import { useRoute } from 'vue-router';
 import getPosts from '../composables/getPosts';
-import Spinner from '../components/Spinner.vue';
+import Spinner from '../components/AppSpinner.vue';
 import PostList from '../components/PostList.vue';
 import TagCloud from '@/components/TagCloud.vue';
 
@@ -25,7 +24,6 @@ export default {
     const route = useRoute();
     const { posts, error, load } = getPosts();
     load();
-    console.log(posts);
     const tagPosts = computed(() => {
       return posts.value.filter((p) => p.tags.includes(route.params.tag));
     });

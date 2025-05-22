@@ -20,7 +20,7 @@ import {
   onSnapshot,
 } from 'firebase/firestore';
 import PostList from '../components/PostList.vue';
-import Spinner from '../components/Spinner.vue';
+import Spinner from '../components/AppSpinner.vue';
 import TagCloud from '../components/TagCloud.vue';
 export default {
   components: { PostList, Spinner, TagCloud },
