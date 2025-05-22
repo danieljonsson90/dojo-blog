@@ -1,8 +1,9 @@
-import { defineConfig } from '@vue/cli-service';
-import TerserPlugin from 'terser-webpack-plugin';
-import CssMinimizerPlugin from 'css-minimizer-webpack-plugin';
+/* eslint-disable @typescript-eslint/no-require-imports */
+const { defineConfig } = require('@vue/cli-service');
+const TerserPlugin = require('terser-webpack-plugin');
+const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
-export default defineConfig({
+module.exports = defineConfig({
   transpileDependencies: true,
 
   configureWebpack: {
