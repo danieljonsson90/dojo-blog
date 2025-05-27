@@ -1,12 +1,14 @@
 <template>
-  <div class="tag-cloud">
-    <h3>Tags</h3>
-    <div v-for="tag in tags" :key="tag">
-      <router-link :to="{ name: 'Tag', params: { tag: tag } }">
-        #{{ tag }}
-      </router-link>
+  <aside>
+    <div class="tag-cloud">
+      <h3>Tags</h3>
+      <div v-for="tag in tags" :key="tag">
+        <router-link :to="{ name: 'Tag', params: { tag: tag } }">
+          #{{ tag }}
+        </router-link>
+      </div>
     </div>
-  </div>
+  </aside>
 </template>
 
 <script>
@@ -45,5 +47,11 @@ export default {
 .tag-cloud a.router-link-active {
   color: #ff8800;
   font-weight: bold;
+}
+
+@media (max-width: 768px) {
+  aside {
+    width: 100%;
+  }
 }
 </style>

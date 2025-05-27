@@ -1,6 +1,9 @@
 <template>
   <div class="post">
-    <router-link :to="{ name: 'Details', params: { id: post.id } }">
+    <router-link
+      :to="{ name: 'Details', params: { id: post.id } }"
+      aria-label="Se hela inlägget"
+    >
       <h3>{{ post.title }}</h3>
     </router-link>
     <div class="post-header">
@@ -24,17 +27,29 @@
         </router-link>
       </p>
       <div class="actions">
-        <router-link :to="{ name: 'Edit', params: { id: post.id } }">
+        <router-link
+          :to="{ name: 'Edit', params: { id: post.id } }"
+          aria-label="Redigera inlägg"
+        >
           <span class="material-icons edit">edit</span>
         </router-link>
-        <span @click="showModal = true" class="material-icons">delete</span>
+        <button @click="showModal = true" aria-label="Ta bort inlägg">
+          <span class="material-icons">delete</span>
+        </button>
       </div>
     </div>
     <div>
       <span v-for="tag in post.tags" :key="tag"> #{{ tag }} </span>
     </div>
   </div>
-  <Modal :show="showModal" @close="showModal = false" @remove="handleDelete">
+  <Modal
+    :show="showModal"
+    :showRemove="true"
+    :removeText="'Ta bort'"
+    :showClose="true"
+    @close="showModal = false"
+    @remove="handleDelete"
+  >
     <h2>Ta bort inlägg</h2>
     <p>
       Är du säker på att du vill ta bort inlägget. När inlägget är borttaget går
@@ -46,8 +61,8 @@
 <script>
 import { computed } from 'vue';
 import removePost from '../composables/removePost';
-import Modal from '@/components/RemoveModal.vue';
-import { ref } from 'vue';
+import Modal from '@/components/CustomModal.vue';
+import { ref, onMounted, onBeforeUnmount } from 'vue';
 export default {
   props: ['post'],
   emits: ['delete'],
@@ -66,6 +81,18 @@ export default {
         showModal.value = false;
       }
     };
+    const handleKeydown = (e) => {
+      if (e.key === 'Escape') {
+        // document.activeElement.blur();
+      }
+    };
+    onMounted(() => {
+      window.addEventListener('keydown', handleKeydown);
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener('keydown', handleKeydown);
+    });
     return { snippet, handleDelete, showModal };
   },
 };
@@ -106,7 +133,14 @@ export default {
 .post-content a {
   color: #ff8800;
 }
-.thumbnail img {
+
+.post-content a:focus-visible {
+  border-radius: 1px;
+  outline: #ff8800 solid 3px;
+  outline-offset: 3px;
+}
+
+.post-header .thumbnail img {
   width: 200px;
   height: 200px;
   object-fit: cover;
@@ -131,10 +165,21 @@ export default {
 
 .post-content .material-icons {
   display: inline-block;
-  margin-left: 15px;
   cursor: pointer;
   font-size: 24px;
   color: #bbb;
+}
+
+.post-content button {
+  border: none;
+  background: white;
+  margin-left: 15px;
+}
+
+.post-content button:focus-visible {
+  border-radius: 1px;
+  outline: #ff8800 solid 3px;
+  outline-offset: 3px;
 }
 
 @media (max-width: 768px) {

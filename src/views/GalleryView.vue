@@ -1,9 +1,18 @@
 <template>
   <div class="uploader">
     <div data-testid="gallery" class="gallery">
-      <div v-for="(img, index) in imageUrls" :key="index" class="thumbnail">
-        <img :src="img" alt="uploaded image" @click="showImage(img, index)" />
-      </div>
+      <button
+        v-for="(img, index) in imageUrls"
+        :key="index"
+        class="thumbnail"
+        @click="showImage(img, index)"
+        @keydown.enter.space.prevent="showImage(img, index)"
+        @keydown.esc="onEscape(index)"
+        ref="thumbnailButton"
+        :aria-label="`Visa bild ${index + 1}`"
+      >
+        <img :src="img" :alt="`Galleri bild av Vietnam resa ${index + 1}`" />
+      </button>
     </div>
     <SingleImage
       v-if="showSingleImage"
@@ -26,16 +35,29 @@ export default {
     const src = ref('');
     const showSingleImage = ref(false);
     const imageIndex = ref(undefined);
+    const thumbnailButton = ref(null);
 
     const showImage = (img, index) => {
       showSingleImage.value = true;
       src.value = img;
       imageIndex.value = index;
     };
-
+    const onEscape = (index) => {
+      if (document.activeElement === thumbnailButton.value[index]) {
+        thumbnailButton.value[index].blur();
+      }
+    };
     const imageUrls = loadImages();
 
-    return { imageUrls, showSingleImage, showImage, src, imageIndex };
+    return {
+      imageUrls,
+      showSingleImage,
+      showImage,
+      src,
+      imageIndex,
+      onEscape,
+      thumbnailButton,
+    };
   },
 };
 </script>
@@ -50,12 +72,21 @@ export default {
   gap: 10px;
   margin-top: 20px;
 }
+.thumbnail {
+  background: white;
+  border: none;
+  border-radius: none;
+}
+
+.thumbnail:focus-visible {
+  outline: #ff8800 solid 3px;
+  outline-offset: 3px;
+}
 .thumbnail img {
   width: 350px;
   height: 350px;
   object-fit: contain;
-  border-radius: 8px;
-  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  border-radius: none;
   cursor: pointer;
 }
 

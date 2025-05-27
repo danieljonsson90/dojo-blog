@@ -14,7 +14,7 @@
       <label>Tags: (hit enter to add tag)</label>
       <input type="text" v-model="tag" @keydown.enter.prevent="handleKeydown" />
       <div v-for="tag in tags" :key="tag" class="pill">#{{ tag }}</div>
-      <button>Update Post</button>
+      <BaseButton>Update Post</BaseButton>
     </form>
     <div v-else>
       <Spinner v-if="!error" />
@@ -32,8 +32,9 @@ import getPost from '../composables/getPost';
 import { ref, onMounted, watch, nextTick } from 'vue';
 import app from '../firebase/config';
 import { getFirestore, updateDoc, doc } from 'firebase/firestore';
+import BaseButton from '@/components/BaseButton.vue';
 export default {
-  components: { Spinner },
+  components: { Spinner, BaseButton },
 
   setup() {
     const title = ref('');

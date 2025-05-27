@@ -1,9 +1,9 @@
 <template>
   <header>
-    <div class="title">
-      <router-link :to="{ name: 'Home' }">
-        <h1>Vietnam</h1>
-      </router-link>
+    <div class="heading">
+      <span class="title">
+        <router-link :to="{ name: 'Home' }"> Vietnam </router-link>
+      </span>
       <div class="icon">
         <span
           @click="onMenuClick"
@@ -16,10 +16,10 @@
     <nav>
       <div>
         <div class="links" :class="{ small: showLinks }">
-          <router-link :to="{ name: 'Home' }">Home</router-link>
-          <router-link :to="{ name: 'Posts' }">Posts</router-link>
-          <router-link :to="{ name: 'Create' }">Create Post</router-link>
-          <router-link :to="{ name: 'Gallery' }">Gallery</router-link>
+          <router-link :to="{ name: 'Home' }">Hem</router-link>
+          <router-link :to="{ name: 'Posts' }">Inlägg</router-link>
+          <router-link :to="{ name: 'Create' }">Skapa inlägg</router-link>
+          <router-link :to="{ name: 'Gallery' }">Galleri</router-link>
         </div>
       </div>
     </nav>
@@ -49,10 +49,10 @@ nav a {
   margin: 20px;
   color: white;
   padding: 5px;
-  font-size: 20px;
+  font-size: 25px;
 }
 
-.title a {
+.heading a {
   text-decoration: none;
 }
 nav a.router-link-active {
@@ -69,9 +69,10 @@ header {
   height: 15rem;
 }
 
-header h1 {
+header .title a {
   color: white;
   font-size: 48px;
+  font-weight: bold;
 }
 
 .icon {
@@ -82,11 +83,11 @@ header h1 {
   border-bottom: 3px solid #ff8800;
 }
 
-@media (max-width: 750px) {
+@media (max-width: 850px) {
   .nav-container {
     padding: 0.5rem !important;
   }
-  .title {
+  .heading {
     display: flex;
     align-items: center;
     margin-top: 2rem;
@@ -106,6 +107,7 @@ header h1 {
   nav a {
     text-align: center;
     margin: 0;
+    font-size: 18px;
   }
   nav .links.small {
     display: flex; /* show when 'small' class is active */

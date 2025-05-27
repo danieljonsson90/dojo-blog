@@ -14,7 +14,7 @@
       <label>Tags: (hit enter to add tag)</label>
       <input type="text" v-model="tag" @keydown.enter.prevent="handleKeydown" />
       <div v-for="tag in tags" :key="tag" class="pill">#{{ tag }}</div>
-      <button>Add Post</button>
+      <BaseButton>Add Post</BaseButton>
     </form>
     <div class="error">
       {{ error }}
@@ -26,8 +26,10 @@
 import { ref, watch, nextTick } from 'vue';
 import addPost from '../composables/addPost';
 import { useRouter } from 'vue-router';
+import BaseButton from '@/components/BaseButton.vue';
 
 export default {
+  components: { BaseButton },
   setup() {
     const title = ref('');
     const thumbnail = ref('');
@@ -156,16 +158,5 @@ textarea {
   padding: 8px;
   border-radius: 20px;
   font-size: 14px;
-}
-
-button {
-  color: white;
-  background: #ff8800;
-  border-radius: 5px;
-  border: solid 1px #eee;
-  padding: 5px 10px;
-  margin-top: 20px;
-  display: block;
-  cursor: pointer;
 }
 </style>

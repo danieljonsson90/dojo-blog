@@ -12,9 +12,9 @@
       </blockquote>
       <p class="pre">{{ post.body }}</p>
       <div class="details-actions">
-        <button @click="showModal = true">Delete post</button>
+        <BaseButton @click="showModal = true">Ta bort</BaseButton>
         <router-link :to="{ name: 'Edit', params: { id: post.id } }">
-          <button>Edit post</button>
+          Redigera
         </router-link>
       </div>
     </div>
@@ -36,11 +36,12 @@ import getPost from '../composables/getPost';
 import Spinner from '../components/AppSpinner.vue';
 import removePost from '../composables/removePost';
 import { useRouter } from 'vue-router';
-import Modal from '@/components/RemoveModal.vue';
+import Modal from '@/components/CustomModal.vue';
 import { ref } from 'vue';
+import BaseButton from '@/components/BaseButton.vue';
 export default {
   props: ['id'],
-  components: { Spinner, Modal },
+  components: { Spinner, Modal, BaseButton },
   setup(props) {
     const { post, error, load } = getPost(props.id);
     const router = useRouter();
@@ -80,6 +81,18 @@ h1 {
 
 .post .details-actions a {
   text-decoration: none;
+  margin-left: 0.5rem;
+  color: white;
+  background: #ff8800;
+  border-radius: 5px;
+  border: solid 1px #eee;
+  padding: 5px 10px;
+  margin-top: 20px;
+  display: inline-block;
+  cursor: pointer;
+  box-sizing: border-box;
+  height: 27.5px;
+  font-size: smaller;
 }
 
 .post .details-actions button {
@@ -88,7 +101,8 @@ h1 {
 }
 .post .details-actions {
   width: 100%;
-  text-align: right;
+  display: flex;
+  justify-content: end;
 }
 
 .details {

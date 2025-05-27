@@ -19,7 +19,7 @@ const getPosts = () => {
       const q = query(postsCol, orderBy('createdAt', 'desc'));
       const postsSnapshot = await getDocs(q);
       posts.value = postsSnapshot.docs.map((doc) => {
-        return { ...doc.data(), id: doc.id };
+        return { ...doc.data(), id: doc.id, loaded: true };
       });
     } catch (err) {
       error.value = err.message;

@@ -2,10 +2,19 @@
   <h1>Single image</h1>
   <div v-if="show" class="image-backdrop" @click.self="close">
     <div class="image-content">
-      <span class="material-icons close" @click="close">close</span>
-      <span class="material-icons right" @click="forward">arrow_forward</span>
-      <span class="material-icons left" @click="back">arrow_back</span>
-      <img :src="imageUrls[current]" alt="uploaded image" />
+      <button class="close" @click="close" aria-label="Stäng förhandsvisning">
+        <span class="material-icons">close</span>
+      </button>
+      <button class="right" @click="forward" aria-label="Nästa bild">
+        <span class="material-icons">arrow_forward</span>
+      </button>
+      <button class="left" @click="back" aria-label="Föregående bild">
+        <span class="material-icons">arrow_back</span>
+      </button>
+      <img
+        :src="imageUrls[current]"
+        :alt="`Förhandsvisning bild ${imageIndex + 1}`"
+      />
     </div>
   </div>
 </template>
@@ -24,6 +33,8 @@ export default {
       } else if (e.key === 'ArrowLeft') {
         current.value =
           (current.value - 1 + props.imageUrls.length) % props.imageUrls.length;
+      } else if (e.key === 'Escape') {
+        close();
       }
     };
     const forward = () => {
@@ -41,7 +52,7 @@ export default {
     onBeforeUnmount(() => {
       window.removeEventListener('keydown', handleKeydown);
     });
-    return { close, handleKeydown, current, forward, back };
+    return { close, current, forward, back };
   },
 };
 </script>
@@ -60,7 +71,7 @@ export default {
 }
 .image-content {
   background: white;
-  padding: 2rem;
+  padding: 4rem;
   border-radius: 10px;
   position: relative;
   min-width: 50vw;
@@ -82,19 +93,24 @@ export default {
   color: #bbb;
   cursor: pointer;
 }
-.image-content .material-icons.close {
+.image-content button.close {
   position: absolute;
-  top: 0.2rem;
-  right: 0.2rem;
+  top: 1rem;
+  right: 0.5rem;
 }
-.image-content .material-icons.right {
+.image-content button.right {
   position: absolute;
   bottom: 50%;
-  right: 0.2rem;
+  right: 0.5rem;
 }
-.image-content .material-icons.left {
+.image-content button.left {
   position: absolute;
   bottom: 50%;
-  left: 0.1rem;
+  left: 0.5rem;
+}
+
+.image-content button {
+  border: none;
+  background: white;
 }
 </style>

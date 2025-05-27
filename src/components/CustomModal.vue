@@ -3,22 +3,48 @@
     <div class="modal-content">
       <slot />
       <div class="modal-buttons">
-        <button class="close-button" @click="close">
+        <button v-if="showClose" class="close-button" @click="close">
           <span class="material-icons">close</span>
         </button>
-        <button class="remove-button" @click="remove">Ta bort</button>
+        <BaseButton v-if="showRemove" @click="remove">{{
+          removeText
+        }}</BaseButton>
+        <BaseButton v-if="showAdd" @click="remove">{{ addText }}</BaseButton>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import BaseButton from './BaseButton.vue';
+import { onMounted, onBeforeUnmount } from 'vue';
 export default {
-  props: ['show'],
+  props: [
+    'show',
+    'showClose',
+    'showRemove',
+    'showAdd',
+    'showAbort',
+    'addText',
+    'removeText',
+  ],
   emits: ['close', 'delete'],
+  components: { BaseButton },
   setup(props, { emit }) {
     const close = () => emit('close');
     const remove = () => emit('remove');
+    const handleKeydown = (e) => {
+      if (e.key === 'Escape') {
+        close();
+      }
+    };
+    onMounted(() => {
+      window.addEventListener('keydown', handleKeydown);
+    });
+
+    onBeforeUnmount(() => {
+      window.removeEventListener('keydown', handleKeydown);
+    });
     return { close, remove };
   },
 };
