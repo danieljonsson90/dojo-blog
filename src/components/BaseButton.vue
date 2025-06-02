@@ -9,23 +9,13 @@
 </template>
 
 <script>
-import { onMounted, onBeforeUnmount, ref } from 'vue';
+import { ref } from 'vue';
+import useEscapeBlurOrEmit from '../composables/useEscapeBlurOrEmit';
 export default {
   props: ['variant'],
   setup() {
     const baseButton = ref(null);
-    onMounted(() => {
-      window.addEventListener('keydown', handleKeydown);
-    });
-
-    onBeforeUnmount(() => {
-      window.removeEventListener('keydown', handleKeydown);
-    });
-    const handleKeydown = (e) => {
-      if (e.key === 'Escape' && document.activeElement === baseButton.value) {
-        baseButton.value.blur();
-      }
-    };
+    useEscapeBlurOrEmit(baseButton);
     return { baseButton };
   },
 };

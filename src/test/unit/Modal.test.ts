@@ -33,6 +33,7 @@ describe('Modal.vue', () => {
     const wrapper = mount(Modal, {
       props: {
         show: true,
+        showClose: true,
       },
     });
 
@@ -52,6 +53,7 @@ describe('Modal.vue', () => {
     const wrapper = mount(Modal, {
       props: {
         show: true,
+        showRemove: true,
       },
     });
 

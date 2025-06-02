@@ -5,7 +5,12 @@
       <button class="close" @click="close" aria-label="Stäng förhandsvisning">
         <span class="material-icons">close</span>
       </button>
-      <button class="right" @click="forward" aria-label="Nästa bild">
+      <button
+        ref="nextImage"
+        class="right"
+        @click="forward"
+        aria-label="Nästa bild"
+      >
         <span class="material-icons">arrow_forward</span>
       </button>
       <button class="left" @click="back" aria-label="Föregående bild">
@@ -27,6 +32,7 @@ export default {
   setup(props, { emit }) {
     const close = () => emit('close');
     const current = ref(props.imageIndex);
+    const nextImage = ref(null);
     const handleKeydown = (e) => {
       if (e.key === 'ArrowRight') {
         current.value = (current.value + 1) % props.imageUrls.length;
@@ -47,12 +53,13 @@ export default {
     };
     onMounted(() => {
       window.addEventListener('keydown', handleKeydown);
+      nextImage.value.focus();
     });
 
     onBeforeUnmount(() => {
       window.removeEventListener('keydown', handleKeydown);
     });
-    return { close, current, forward, back };
+    return { close, current, forward, back, nextImage };
   },
 };
 </script>

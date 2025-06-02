@@ -2,9 +2,9 @@
   <header>
     <div class="heading">
       <span class="title">
-        <router-link :to="{ name: 'Home' }"> Vietnam </router-link>
+        <BaseLink :name="'Home'" :linkText="'Vietnam'" />
       </span>
-      <div class="icon">
+      <div class="menu-icon">
         <span
           @click="onMenuClick"
           class="material-icons"
@@ -16,10 +16,10 @@
     <nav>
       <div>
         <div class="links" :class="{ small: showLinks }">
-          <router-link :to="{ name: 'Home' }">Hem</router-link>
-          <router-link :to="{ name: 'Posts' }">Inlägg</router-link>
-          <router-link :to="{ name: 'Create' }">Skapa inlägg</router-link>
-          <router-link :to="{ name: 'Gallery' }">Galleri</router-link>
+          <BaseLink :name="'Home'" :linkText="'Hem'" />
+          <BaseLink :name="'Posts'" :linkText="'Inlägg'" />
+          <BaseLink :name="'Create'" :linkText="'Skapa inlägg'" />
+          <BaseLink :name="'Gallery'" :linkText="'Galleri'" />
         </div>
       </div>
     </nav>
@@ -28,12 +28,13 @@
 
 <script>
 import { ref } from 'vue';
+import BaseLink from './BaseLink.vue';
 
 export default {
+  components: { BaseLink },
   setup() {
     const showLinks = ref(false);
     const onMenuClick = () => {
-      console.log('click');
       showLinks.value = !showLinks.value;
     };
 
@@ -45,19 +46,8 @@ export default {
 <style>
 nav a {
   display: inline-block;
-  text-decoration: none;
   margin: 20px;
-  color: white;
   padding: 5px;
-  font-size: 25px;
-}
-
-.heading a {
-  text-decoration: none;
-}
-nav a.router-link-active {
-  border-bottom: 3px solid #ff8800;
-  font-weight: bold;
 }
 
 header {
@@ -73,9 +63,10 @@ header .title a {
   color: white;
   font-size: 48px;
   font-weight: bold;
+  text-decoration: none;
 }
 
-.icon {
+.menu-icon {
   display: none;
 }
 
@@ -104,23 +95,18 @@ header .title a {
     display: none;
   }
 
-  nav a {
-    text-align: center;
-    margin: 0;
-    font-size: 18px;
-  }
   nav .links.small {
     display: flex; /* show when 'small' class is active */
     flex-direction: row;
     margin-top: 1rem;
     justify-content: space-around;
   }
-  .icon {
+  .menu-icon {
     display: block;
     padding-top: 0.5rem;
   }
 
-  .icon .material-icons {
+  .menu-icon .material-icons {
     font-size: 28px;
     font-weight: bold;
   }

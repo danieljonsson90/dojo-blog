@@ -62,7 +62,8 @@
 import { computed } from 'vue';
 import removePost from '../composables/removePost';
 import Modal from '@/components/CustomModal.vue';
-import { ref, onMounted, onBeforeUnmount } from 'vue';
+import { ref } from 'vue';
+import useEscapeBlurOrEmit from '../composables/useEscapeBlurOrEmit';
 export default {
   props: ['post'],
   emits: ['delete'],
@@ -81,18 +82,9 @@ export default {
         showModal.value = false;
       }
     };
-    const handleKeydown = (e) => {
-      if (e.key === 'Escape') {
-        // document.activeElement.blur();
-      }
-    };
-    onMounted(() => {
-      window.addEventListener('keydown', handleKeydown);
-    });
 
-    onBeforeUnmount(() => {
-      window.removeEventListener('keydown', handleKeydown);
-    });
+    useEscapeBlurOrEmit();
+
     return { snippet, handleDelete, showModal };
   },
 };
