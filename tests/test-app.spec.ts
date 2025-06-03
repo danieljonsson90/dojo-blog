@@ -22,25 +22,30 @@ test.describe('Navigation', () => {
     await page.goto(baseURL + 'posts');
   });
   test('test edit link', async ({ page }) => {
-    await page.getByRole('link', { name: 'edit' }).first().click();
+    await page.waitForSelector('.post');
+    await page.getByRole('link', { name: 'Redigera inlägg' }).click();
     await expect(
-      page.getByRole('button', { name: 'Update Post' })
+      page.getByRole('button', { name: 'Uppdatera inlägg' })
     ).toBeVisible();
-    await page.getByRole('button', { name: 'Update Post' }).click();
+    await page.getByRole('button', { name: 'Uppdatera inlägg' }).click();
   });
 
   test('test create link', async ({ page }) => {
+    await page.goto(baseURL);
     // Click the create link.
-    await page.getByRole('link', { name: 'Create' }).click();
+    await page.getByRole('link', { name: 'Skapa inlägg' }).click();
 
     // Expects page to have a heading with the name of Installation.
-    await expect(page.getByRole('button', { name: 'Add Post' })).toBeVisible();
+    await expect(
+      page.getByRole('button', { name: 'Skapa inlägg' })
+    ).toBeVisible();
     await expect(page).toHaveURL(baseURL + 'create');
   });
 
   test('test gallery link', async ({ page }) => {
+    await page.goto(baseURL);
     // Click the create link.
-    await page.getByRole('link', { name: 'Gallery' }).click();
+    await page.getByRole('link', { name: 'Galleri' }).click();
 
     // Expects page to have a testId Gallery
     await expect(page.getByTestId('gallery')).toBeVisible();
@@ -48,15 +53,15 @@ test.describe('Navigation', () => {
   });
 
   test('test details link', async ({ page }) => {
+    await page.goto(baseURL + 'posts');
+    await page.waitForSelector('.post');
     await page.getByRole('link', { name: 'Läs mer' }).first().click();
 
     // Expects page to have a testId details
     await expect(page.getByTestId('details')).toBeVisible();
 
-    await expect(
-      page.getByRole('button', { name: 'Delete post' })
-    ).toBeVisible();
-    await expect(page.getByRole('button', { name: 'Edit post' })).toBeVisible();
+    await expect(page.getByRole('button', { name: 'ta bort' })).toBeVisible();
+    await expect(page.getByRole('link', { name: 'redigera' })).toBeVisible();
   });
 });
 
@@ -64,7 +69,7 @@ test.describe('Formulärinmatning och validering', () => {
   const baseURL = process.env.BASE_URL;
   test.beforeEach(async ({ page }) => {
     await page.goto(baseURL + 'posts');
-    // await resetEnvironmentForTests(page);
+    await page.waitForSelector('.post');
   });
 
   test('Skapa och ta bort ett inlägg', async ({ page }) => {
@@ -91,7 +96,7 @@ test.describe('Formulärinmatning och validering', () => {
 });
 
 async function createAndCheckDefaultPost(page: Page) {
-  await page.getByRole('link', { name: 'Create Post' }).click();
+  await page.getByRole('link', { name: 'Skapa inlägg' }).click();
   await page.locator('input[type="text"]').first().click();
   await page.locator('input[type="text"]').first().fill(post.title);
   await page.locator('input[type="text"]').nth(2).click();
@@ -103,25 +108,16 @@ async function createAndCheckDefaultPost(page: Page) {
   await page.locator('input[type="text"]').nth(4).click();
   await page.locator('input[type="text"]').nth(4).fill(post.tag);
   await page.locator('input[type="text"]').nth(4).press('Enter');
-  await page.getByRole('button', { name: 'Add Post' }).click();
+  await page.getByRole('button', { name: 'Skapa inlägg' }).click();
 }
-
-// async function resetEnvironmentForTests(page: Page) {
-//   if (page.getByText(post.title).isVisible()) {
-//     debugger;
-//     await page.getByText('delete').first().click();
-//     await page.getByRole('button', { name: 'Ta bort' }).click();
-//     await expect(page.getByText(post.title)).not.toBeVisible();
-//   }
-// }
 
 async function removeAndCheckDefaultPost(page: Page) {
   await page.getByText('delete').first().click();
-  await page.getByRole('button', { name: 'Ta bort' }).click();
+  await page.getByTestId('modal-remove').click();
 }
 
 async function updateAndCheckDefaultPost(page: Page) {
-  await page.getByRole('link', { name: 'edit' }).first().click();
+  await page.getByRole('link', { name: 'redigera' }).first().click();
   await page.locator('input[type="text"]').first().click();
   await page.locator('input[type="text"]').first().fill(updatePost.title);
   await page.locator('input[type="text"]').nth(2).click();
@@ -129,5 +125,5 @@ async function updateAndCheckDefaultPost(page: Page) {
   await page.locator('textarea').click();
 
   await page.locator('textarea').fill(updatePost.body);
-  await page.getByRole('button', { name: 'Update Post' }).click();
+  await page.getByRole('button', { name: 'Uppdatera inlägg' }).click();
 }

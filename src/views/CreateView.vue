@@ -14,7 +14,7 @@
       <label>Tags: (hit enter to add tag)</label>
       <input type="text" v-model="tag" @keydown.enter.prevent="handleKeydown" />
       <div v-for="tag in tags" :key="tag" class="pill">#{{ tag }}</div>
-      <BaseButton>Add Post</BaseButton>
+      <BaseButton>Skapa inlägg</BaseButton>
     </form>
     <div class="error">
       {{ error }}

@@ -6,10 +6,16 @@
         <button v-if="showClose" class="close-button" @click="close">
           <span class="material-icons">close</span>
         </button>
-        <BaseButton class="remove-button" v-if="showRemove" @click="remove">{{
-          removeText
+        <BaseButton
+          data-testid="modal-remove"
+          class="remove-button"
+          v-if="showRemove"
+          @click="remove"
+          >{{ removeText }}</BaseButton
+        >
+        <BaseButton v-if="showAdd" @click="console.log('add')">{{
+          addText
         }}</BaseButton>
-        <BaseButton v-if="showAdd" @click="remove">{{ addText }}</BaseButton>
       </div>
     </div>
   </div>

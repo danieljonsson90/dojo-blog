@@ -9,11 +9,15 @@ import {
 } from 'firebase/firestore';
 
 const getPosts = () => {
-  const posts = ref([]);
+  const posts = ref(null);
   const error = ref(null);
+  const isLoading = ref(false);
 
   const load = async () => {
     try {
+      isLoading.value = true;
+      error.value = null;
+
       const db = getFirestore(app);
       const postsCol = collection(db, 'posts');
       const q = query(postsCol, orderBy('createdAt', 'desc'));
@@ -23,10 +27,13 @@ const getPosts = () => {
       });
     } catch (err) {
       error.value = err.message;
+      posts.value = []; // Consider setting to empty array on error
+    } finally {
+      isLoading.value = false;
     }
   };
 
-  return { posts, error, load };
+  return { posts, error, isLoading, load };
 };
 
 export default getPosts;

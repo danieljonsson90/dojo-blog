@@ -1,20 +1,22 @@
 <template>
   <div data-testid="posts" class="posts">
     <div v-if="error">error:{{ error }}</div>
-    <div v-if="posts.length" class="layout">
-      <PostList :posts="posts" />
-      <TagCloud :posts="posts" />
+    <div v-if="isLoading">
+      <Spinner />
     </div>
-    <div v-else-if="posts.length === 0 && loaded">
-      <p class="no-posts">
-        Det finns inga inlägg, gå till
-        <router-link :to="{ name: 'Create' }">skapa inlägg</router-link>
-        för att skapa ett nytt inlägg.
-      </p>
-    </div>
-    <div v-else>
-      <Spinner v-if="!error" />
-    </div>
+    <template v-else>
+      <div v-if="posts?.length > 0" class="layout">
+        <PostList :posts="posts" />
+        <TagCloud :posts="posts" />
+      </div>
+      <div v-else>
+        <p class="no-posts">
+          Det finns inga inlägg, gå till
+          <router-link :to="{ name: 'Create' }">skapa inlägg</router-link>
+          för att skapa ett nytt inlägg.
+        </p>
+      </div>
+    </template>
   </div>
 </template>
 
@@ -23,17 +25,14 @@ import PostList from '../components/PostList.vue';
 import getPosts from '../composables/getPosts';
 import Spinner from '../components/AppSpinner.vue';
 import TagCloud from '@/components/TagCloud.vue';
-import { ref } from 'vue';
+
 export default {
-  name: 'HomeView',
   components: { PostList, Spinner, TagCloud },
   setup() {
-    const loaded = ref(false);
-    const { posts, error, load } = getPosts();
-    const data = load();
-    loaded.value = data.loaded;
+    const { posts, error, isLoading, load } = getPosts();
+    load();
 
-    return { posts, error, loaded };
+    return { posts, error, isLoading };
   },
 };
 </script>
