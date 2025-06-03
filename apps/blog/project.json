@@ -1,0 +1,29 @@
+{
+  "name": "blog",
+  "root": "apps/blog",
+  "projectType": "application",
+  "sourceRoot": "apps/blog/src",
+  "targets": {
+    "serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm run serve",
+        "cwd": "apps/blog"
+      }
+    },
+    "build": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm run build",
+        "cwd": "apps/blog"
+      }
+    },
+    "lint": {
+      "executor": "nx:run-commands",
+      "options": {
+        "command": "npm run lint",
+        "cwd": "apps/blog"
+      }
+    }
+  }
+}

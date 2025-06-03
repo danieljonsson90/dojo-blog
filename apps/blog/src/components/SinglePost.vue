@@ -2,7 +2,7 @@
   <div class="post">
     <router-link
       :to="{ name: 'Details', params: { id: post.id } }"
-      aria-label="Se hela inlägget"
+      :aria-label="'Se hela inlägget ' + post.title"
     >
       <h3>{{ post.title }}</h3>
     </router-link>

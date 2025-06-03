@@ -15,12 +15,13 @@ const updatePost = {
   author: 'unknown',
   tag: 'test',
 } as const;
+const baseURL = process.env.BASE_URL;
+test.beforeEach(async ({ page }) => {
+  await page.goto(baseURL + 'posts');
+  await page.waitForSelector('.post');
+});
 
 test.describe('Navigation', () => {
-  const baseURL = process.env.BASE_URL;
-  test.beforeEach(async ({ page }) => {
-    await page.goto(baseURL + 'posts');
-  });
   test('test edit link', async ({ page }) => {
     await page.waitForSelector('.post');
     await page.getByRole('link', { name: 'Redigera inlägg' }).click();
@@ -66,12 +67,6 @@ test.describe('Navigation', () => {
 });
 
 test.describe('Formulärinmatning och validering', () => {
-  const baseURL = process.env.BASE_URL;
-  test.beforeEach(async ({ page }) => {
-    await page.goto(baseURL + 'posts');
-    await page.waitForSelector('.post');
-  });
-
   test('Skapa och ta bort ett inlägg', async ({ page }) => {
     await createAndCheckDefaultPost(page);
     await expect(page.getByTestId('posts')).toBeVisible();

@@ -5,8 +5,8 @@
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
-    "test": "vitest",
-    "test:ui": "vitest --ui",
+    "test": "nx vite:test",
+    "test:ui": "nx vite:test --ui",
     "preview": "vite preview",
     "start": "vite preview",
     "lint": "eslint"
@@ -20,6 +20,10 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.27.0",
+    "@nx/eslint": "21.1.2",
+    "@nx/playwright": "21.1.2",
+    "@nx/vite": "21.1.2",
+    "@nx/web": "21.1.2",
     "@playwright/test": "^1.52.0",
     "@testing-library/vue": "^8.1.0",
     "@types/node": "^22.15.18",
@@ -35,6 +39,8 @@
     "file-loader": "^6.2.0",
     "globals": "^16.1.0",
     "happy-dom": "^17.4.7",
+    "jiti": "2.4.2",
+    "nx": "21.1.2",
     "terser-webpack-plugin": "^5.3.14",
     "typescript-eslint": "^8.32.1",
     "url-loader": "^4.1.1",
@@ -43,5 +49,6 @@
     "webpack": "^5.99.8",
     "webpack-cli": "^6.0.1",
     "webpack-dev-server": "^5.2.1"
-  }
+  },
+  "nx": {}
 }

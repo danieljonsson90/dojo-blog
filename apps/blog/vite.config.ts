@@ -4,6 +4,7 @@ import vue from '@vitejs/plugin-vue'; // Import the plugin
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  root: 'apps/blog',
   plugins: [vue()], // Add the plugin to the Vite config
   resolve: {
     alias: {

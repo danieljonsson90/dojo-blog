@@ -5,7 +5,6 @@ const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
 
 module.exports = defineConfig({
   transpileDependencies: true,
-
   configureWebpack: {
     optimization: {
       minimize: true,
