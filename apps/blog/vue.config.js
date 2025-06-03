@@ -2,9 +2,19 @@
 const { defineConfig } = require('@vue/cli-service');
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require('css-minimizer-webpack-plugin');
+const path = require('path');
 
 module.exports = defineConfig({
   transpileDependencies: true,
+  pages: {
+    index: {
+      entry: 'src/main.js', // Relative to apps/blog
+      template: 'public/index.html',
+      filename: 'index.html',
+    },
+  },
+  outputDir: path.resolve(__dirname, '../../dist/apps/blog'), // Set correct build output
+
   configureWebpack: {
     optimization: {
       minimize: true,
@@ -14,15 +24,15 @@ module.exports = defineConfig({
       rules: [
         {
           test: /\.(png|jpe?g|gif)$/i,
-          type: 'asset/resource', // 👈 Modern way (recommended)
+          type: 'asset/resource',
           generator: {
-            filename: 'img/[name][ext]', // Or 'img/[name].[hash][ext]' if you want cache busting
+            filename: 'img/[name][ext]',
           },
         },
       ],
     },
     output: {
-      filename: 'bundle.[contenthash].js', // Hashes för cachehantering
+      filename: 'bundle.[contenthash].js',
     },
   },
 });
