@@ -34,3 +34,7 @@ npx playwright codegen
 ### Unit tests (vitest)
 
 npm run test
+
+### Storybook
+
+npm run storybook

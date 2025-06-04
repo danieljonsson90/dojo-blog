@@ -13,8 +13,10 @@
       <textarea ref="textareaRef" required v-model="body"></textarea>
       <label>Tags: (hit enter to add tag)</label>
       <input type="text" v-model="tag" @keydown.enter.prevent="handleKeydown" />
-      <div v-for="tag in tags" :key="tag" class="pill">#{{ tag }}</div>
-      <BaseButton>Uppdatera inlägg</BaseButton>
+      <div>
+        <div v-for="tag in tags" :key="tag" class="pill">#{{ tag }}</div>
+      </div>
+      <BaseButton :label="'Uppdatera inlägg'" />
     </form>
     <div v-else>
       <Spinner v-if="!error" />
@@ -128,7 +130,9 @@ export default {
 h1 {
   text-align: center;
 }
-
+.pill {
+  display: inline-block;
+}
 form {
   text-align: left;
   margin: 0 15px;

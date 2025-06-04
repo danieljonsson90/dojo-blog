@@ -12,7 +12,7 @@
       </blockquote>
       <p class="pre">{{ post.body }}</p>
       <div class="details-actions">
-        <BaseButton @click="showModal = true">Ta bort</BaseButton>
+        <BaseButton @click="showModal = true" :label="'Ta bort'" />
         <router-link :to="{ name: 'Edit', params: { id: post.id } }">
           Redigera
         </router-link>

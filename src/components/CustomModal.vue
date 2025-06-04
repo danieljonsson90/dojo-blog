@@ -11,11 +11,14 @@
           class="remove-button"
           v-if="showRemove"
           @click="remove"
-          >{{ removeText }}</BaseButton
-        >
-        <BaseButton v-if="showAdd" @click="console.log('add')">{{
-          addText
-        }}</BaseButton>
+          :label="removeText"
+        />
+
+        <BaseButton
+          v-if="showAdd"
+          @click="console.log('add')"
+          :label="addText"
+        />
       </div>
     </div>
   </div>

@@ -1,5 +1,5 @@
 <template>
-  <Navbar class="nav-container" />
+  <Navbar />
   <div class="content">
     <router-view />
   </div>
@@ -7,7 +7,7 @@
 </template>
 
 <script>
-import Navbar from './components/AppNavbar.vue';
+import Navbar from './components/AppHeader.vue';
 import AppFooter from './components/AppFooter.vue';
 export default {
   components: { Navbar, AppFooter },
@@ -31,14 +31,6 @@ body {
 
 .content {
   flex: 1; /* This takes up the remaining space */
-}
-
-.nav-container {
-  background-image: url('@/assets/images/0AA5D7C5-0660-44F8-A6AE-AD474C393690.jpg'); /* adjust path */
-  background-size: cover;
-  background-position: center;
-  color: white;
-  padding: 2rem;
 }
 
 blockquote {

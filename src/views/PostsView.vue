@@ -1,9 +1,9 @@
 <template>
   <div data-testid="posts" class="posts">
-    <div v-if="error">error:{{ error }}</div>
     <div v-if="isLoading">
       <Spinner />
     </div>
+    <div v-else-if="error">Error: {{ error }}</div>
     <template v-else>
       <div v-if="posts?.length > 0" class="layout">
         <PostList :posts="posts" />

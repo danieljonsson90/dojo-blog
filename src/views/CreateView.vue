@@ -13,8 +13,10 @@
       <textarea ref="textareaRef" required v-model="body"></textarea>
       <label>Tags: (hit enter to add tag)</label>
       <input type="text" v-model="tag" @keydown.enter.prevent="handleKeydown" />
-      <div v-for="tag in tags" :key="tag" class="pill">#{{ tag }}</div>
-      <BaseButton>Skapa inlägg</BaseButton>
+      <div>
+        <div v-for="tag in tags" :key="tag" class="pill">#{{ tag }}</div>
+      </div>
+      <BaseButton :label="'Skapa inlägg'" />
     </form>
     <div class="error">
       {{ error }}
@@ -61,6 +63,7 @@ export default {
     const handleSubmit = async () => {
       const post = {
         title: title.value,
+        thumbnail: thumbnail.value,
         body: body.value,
         tags: tags.value,
         quote: quote.value,

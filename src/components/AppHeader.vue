@@ -2,7 +2,12 @@
   <header>
     <div class="heading">
       <span class="title">
-        <BaseLink :name="'Home'" :linkText="'Vietnam'" />
+        <BaseLink
+          :name="'Home'"
+          :label="'Vietnam'"
+          :primary="false"
+          color="white"
+        />
       </span>
       <div class="menu-icon">
         <span
@@ -16,10 +21,30 @@
     <nav>
       <div>
         <div class="links" :class="{ small: showLinks }">
-          <BaseLink :name="'Home'" :linkText="'Hem'" />
-          <BaseLink :name="'Posts'" :linkText="'Inlägg'" />
-          <BaseLink :name="'Create'" :linkText="'Skapa inlägg'" />
-          <BaseLink :name="'Gallery'" :linkText="'Galleri'" />
+          <BaseLink
+            :name="'Home'"
+            :label="'Hem'"
+            :primary="false"
+            color="white"
+          />
+          <BaseLink
+            :name="'Posts'"
+            :label="'Inlägg'"
+            :primary="false"
+            color="white"
+          />
+          <BaseLink
+            :name="'Create'"
+            :label="'Skapa inlägg'"
+            :primary="false"
+            color="white"
+          />
+          <BaseLink
+            :name="'Gallery'"
+            :label="'Galleri'"
+            :primary="false"
+            color="white"
+          />
         </div>
       </div>
     </nav>
@@ -29,6 +54,7 @@
 <script>
 import { ref } from 'vue';
 import BaseLink from './BaseLink.vue';
+import { Primary } from '@/stories/Button.stories';
 
 export default {
   components: { BaseLink },
@@ -44,7 +70,7 @@ export default {
 </script>
 
 <style>
-nav a {
+nav .base-link {
   display: inline-block;
   margin: 20px;
   padding: 5px;
@@ -57,9 +83,14 @@ header {
   align-items: center;
   padding: 10px;
   height: 15rem;
+  background-image: url('@/assets/images/0AA5D7C5-0660-44F8-A6AE-AD474C393690.jpg'); /* adjust path */
+  background-size: cover;
+  background-position: center;
+  color: white;
+  padding: 2rem;
 }
 
-header .title a {
+header .title .base-link {
   color: white;
   font-size: 48px;
   font-weight: bold;
@@ -113,6 +144,18 @@ header .title a {
   header .material-icons {
     color: white;
     cursor: pointer;
+  }
+}
+
+@media (max-width: 500px) {
+  header {
+    padding: 1rem;
+  }
+}
+
+@media (max-width: 350px) {
+  header {
+    padding: 0;
   }
 }
 </style>
