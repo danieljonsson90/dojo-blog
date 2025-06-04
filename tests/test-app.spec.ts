@@ -23,7 +23,7 @@ test.describe('Navigation', () => {
   });
   test('test edit link', async ({ page }) => {
     await page.waitForSelector('.post');
-    await page.getByRole('link', { name: 'Redigera inlägg' }).click();
+    await page.getByRole('link', { name: 'Redigera inlägg' }).first().click();
     await expect(
       page.getByRole('button', { name: 'Uppdatera inlägg' })
     ).toBeVisible();
@@ -56,6 +56,7 @@ test.describe('Navigation', () => {
     await page.goto(baseURL + 'posts');
     await page.waitForSelector('.post');
     await page.getByRole('link', { name: 'Läs mer' }).first().click();
+    await page.waitForSelector('.details');
 
     // Expects page to have a testId details
     await expect(page.getByTestId('details')).toBeVisible();
