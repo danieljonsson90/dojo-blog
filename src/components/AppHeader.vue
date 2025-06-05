@@ -26,24 +26,28 @@
             :label="'Hem'"
             :primary="false"
             color="white"
+            size="large"
           />
           <BaseLink
             :name="'Posts'"
             :label="'Inlägg'"
             :primary="false"
             color="white"
+            size="large"
           />
           <BaseLink
             :name="'Create'"
             :label="'Skapa inlägg'"
             :primary="false"
             color="white"
+            size="large"
           />
           <BaseLink
             :name="'Gallery'"
             :label="'Galleri'"
             :primary="false"
             color="white"
+            size="large"
           />
         </div>
       </div>
@@ -113,6 +117,7 @@ header .title .base-link {
     display: flex;
     align-items: center;
     margin-top: 2rem;
+    margin-bottom: 2rem;
     justify-content: space-between;
   }
   header {

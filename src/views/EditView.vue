@@ -1,18 +1,40 @@
 <template>
   <div class="edit-post">
     <form @submit.prevent="handleSubmit" v-if="post">
-      <label>Title:</label>
-      <input type="text" required v-model="title" />
-      <label>Thumbnail source:</label>
-      <input type="text" v-model="thumbnail" />
-      <label>Quote:</label>
-      <input type="text" v-model="quote" />
-      <label>Quote origin:</label>
-      <input type="text" v-model="quoteOrigin" />
-      <label>Content:</label>
-      <textarea ref="textareaRef" required v-model="body"></textarea>
-      <label>Tags: (hit enter to add tag)</label>
-      <input type="text" v-model="tag" @keydown.enter.prevent="handleKeydown" />
+      <BaseInput
+        v-model="title"
+        :required="true"
+        placeholder="Post title"
+        label="Title:"
+        name="title"
+      />
+      <BaseInput
+        v-model="thumbnail"
+        placeholder="Enter image src"
+        label="Thumbnail source:"
+        name="thumbnail"
+      />
+      <BaseInput
+        v-model="quote"
+        placeholder="Enter a quote"
+        label="Quote"
+        name="quote"
+      />
+      <BaseInput v-model="quoteOrigin" label="Quote origin:" name="origin" />
+      <BaseInput
+        v-model="body"
+        placeholder="Enter text"
+        label="Content:"
+        name="content"
+        type="textarea"
+      />
+      <BaseInput
+        v-model="tag"
+        placeholder="Enter tags"
+        label="Tags: (hit enter to add tag)"
+        name="tag"
+        @keydown.enter.prevent="handleKeydown"
+      />
       <div>
         <div v-for="tag in tags" :key="tag" class="pill">#{{ tag }}</div>
       </div>
@@ -35,8 +57,9 @@ import { ref, onMounted, watch, nextTick } from 'vue';
 import app from '../firebase/config';
 import { getFirestore, updateDoc, doc } from 'firebase/firestore';
 import BaseButton from '@/components/BaseButton.vue';
+import BaseInput from '@/components/BaseInput.vue';
 export default {
-  components: { Spinner, BaseButton },
+  components: { Spinner, BaseButton, BaseInput },
 
   setup() {
     const title = ref('');
@@ -50,16 +73,6 @@ export default {
     const route = useRoute();
     const router = useRouter();
     const { post, error, load } = getPost(route.params.id);
-    const textareaRef = ref(null);
-
-    const autoResize = () => {
-      const el = textareaRef.value;
-
-      if (el) {
-        el.style.height = 'auto';
-        el.style.height = el.scrollHeight + 5 + 'px';
-      }
-    };
 
     const handleKeydown = () => {
       if (!tags.value.includes(tag.value)) {
@@ -96,15 +109,9 @@ export default {
         quote.value = post.value.quote;
         quoteOrigin.value = post.value.quoteOrigin;
         thumbnail.value = post.value.thumbnail ?? '';
-        await nextTick();
-        autoResize();
       } catch (err) {
         console.error(err);
       }
-    });
-    watch(body, async () => {
-      await nextTick();
-      autoResize();
     });
 
     return {
@@ -116,8 +123,6 @@ export default {
       error,
       handleSubmit,
       handleKeydown,
-      textareaRef,
-      autoResize,
       thumbnail,
       quote,
       quoteOrigin,

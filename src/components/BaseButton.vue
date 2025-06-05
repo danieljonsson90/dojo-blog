@@ -3,6 +3,7 @@
     :class="['base-button', classes]"
     @click="$emit('click')"
     ref="baseButton"
+    :style="{ backgroundColor }"
   >
     {{ label }}
   </button>

@@ -1,18 +1,41 @@
 <template>
   <div class="create">
     <form @submit.prevent="handleSubmit">
-      <label>Title:</label>
-      <input type="text" required v-model="title" />
-      <label>Thumbnail source:</label>
-      <input type="text" v-model="thumbnail" />
-      <label>Quote:</label>
-      <input type="text" v-model="quote" />
-      <label>Quote origin:</label>
-      <input type="text" v-model="quoteOrigin" />
-      <label>Content:</label>
-      <textarea ref="textareaRef" required v-model="body"></textarea>
-      <label>Tags: (hit enter to add tag)</label>
-      <input type="text" v-model="tag" @keydown.enter.prevent="handleKeydown" />
+      <BaseInput
+        v-model="title"
+        :required="true"
+        placeholder="Post title"
+        label="Title:"
+        name="title"
+      />
+      <BaseInput
+        v-model="thumbnail"
+        placeholder="Enter image src"
+        label="Thumbnail source:"
+        name="thumbnail"
+      />
+      <BaseInput
+        v-model="quote"
+        placeholder="Enter a quote"
+        label="Quote"
+        name="quote"
+      />
+      <BaseInput v-model="quoteOrigin" label="Quote origin:" name="origin" />
+      <BaseInput
+        v-model="body"
+        placeholder="Enter text"
+        label="Content:"
+        name="content"
+        type="textarea"
+        ref="textareaRef"
+      />
+      <BaseInput
+        v-model="tag"
+        placeholder="Enter tags"
+        label="Tags: (hit enter to add tag)"
+        name="tag"
+        @keydown.enter.prevent="handleKeydown"
+      />
       <div>
         <div v-for="tag in tags" :key="tag" class="pill">#{{ tag }}</div>
       </div>
@@ -29,9 +52,10 @@ import { ref, watch, nextTick } from 'vue';
 import addPost from '../composables/addPost';
 import { useRouter } from 'vue-router';
 import BaseButton from '@/components/BaseButton.vue';
+import BaseInput from '@/components/BaseInput.vue';
 
 export default {
-  components: { BaseButton },
+  components: { BaseButton, BaseInput },
   setup() {
     const title = ref('');
     const thumbnail = ref('');
@@ -109,48 +133,6 @@ form {
 .create {
   max-width: 500px;
   margin: 0 auto;
-}
-
-input,
-textarea {
-  display: block;
-  min-width: 100%;
-  max-width: 100%;
-  margin: 10px auto;
-  box-sizing: border-box;
-  padding: 10px;
-  border: 1px solid #eee;
-}
-
-textarea:focus {
-  border: 1px solid #444;
-}
-
-label {
-  display: inline-block;
-  margin-top: 30px;
-  position: relative;
-  font-size: 20px;
-  color: white;
-  margin-bottom: 10px;
-}
-
-label::before {
-  content: '';
-  display: block;
-  position: absolute;
-  width: 100%;
-  height: 100%;
-  background: #ff8800;
-  z-index: -1;
-  padding-right: 40px;
-  left: -20px;
-  transform: rotate(-1.5deg);
-}
-
-textarea {
-  min-height: 150px;
-  height: fit-content;
 }
 
 .pill {

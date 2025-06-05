@@ -86,12 +86,11 @@ h1 {
   background: #ff8800;
   border-radius: 5px;
   border: solid 1px #eee;
-  padding: 5px 10px;
+  padding: 11px 20px;
   margin-top: 20px;
   display: inline-block;
   cursor: pointer;
   box-sizing: border-box;
-  height: 27.5px;
   font-size: smaller;
 }
 
