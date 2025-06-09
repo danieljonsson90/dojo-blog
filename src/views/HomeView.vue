@@ -35,9 +35,6 @@ export default {
 </script>
 
 <style>
-.home-gallery-container {
-}
-
 .home {
   max-width: 1200px;
   margin: 0 auto;
