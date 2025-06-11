@@ -39,7 +39,7 @@
       </div>
     </div>
     <div>
-      <span v-for="tag in post.tags" :key="tag"> #{{ tag }} </span>
+      <span class="tag" v-for="tag in post.tags" :key="tag"> #{{ tag }} </span>
     </div>
   </div>
   <Modal
@@ -108,6 +108,11 @@ export default {
   color: black;
   margin-bottom: 10px;
   max-width: 400px;
+}
+
+.tag {
+  color: #ccc;
+  margin-right: 0.5rem;
 }
 
 .post h3::before {
