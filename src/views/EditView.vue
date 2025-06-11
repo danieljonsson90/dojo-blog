@@ -36,7 +36,12 @@
         @keydown.enter.prevent="handleKeydown"
       />
       <div>
-        <div v-for="tag in tags" :key="tag" class="pill">#{{ tag }}</div>
+        <div v-for="tag in tags" :key="tag" class="pill">
+          #{{ tag }}
+          <button class="close-button" @click="removeTag(tag)">
+            <span class="material-icons">close</span>
+          </button>
+        </div>
       </div>
       <BaseButton :label="'Uppdatera inlägg'" />
     </form>
@@ -53,7 +58,7 @@
 import Spinner from '../components/AppSpinner.vue';
 import { useRoute, useRouter } from 'vue-router';
 import getPost from '../composables/getPost';
-import { ref, onMounted, watch, nextTick } from 'vue';
+import { ref, onMounted } from 'vue';
 import app from '../firebase/config';
 import { getFirestore, updateDoc, doc } from 'firebase/firestore';
 import BaseButton from '@/components/BaseButton.vue';
@@ -76,8 +81,10 @@ export default {
 
     const handleKeydown = () => {
       if (!tags.value.includes(tag.value)) {
-        tag.value = tag.value.replace(/ s/, '');
-        tags.value.push(tag.value);
+        tag.value = tag.value.trim();
+        if (tag.value !== '') {
+          tags.value.push(tag.value);
+        }
       }
       tag.value = '';
     };
@@ -98,6 +105,12 @@ export default {
       } catch (err) {
         error.value = err.message;
       }
+    };
+
+    const removeTag = (tag) => {
+      tags.value = tags.value.filter((t) => {
+        return t !== tag;
+      });
     };
 
     onMounted(async () => {
@@ -126,6 +139,7 @@ export default {
       thumbnail,
       quote,
       quoteOrigin,
+      removeTag,
     };
   },
 };

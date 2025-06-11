@@ -37,7 +37,12 @@
         @keydown.enter.prevent="handleKeydown"
       />
       <div>
-        <div v-for="tag in tags" :key="tag" class="pill">#{{ tag }}</div>
+        <div v-for="tag in tags" :key="tag" class="pill">
+          #{{ tag }}
+          <button class="close-button" @click="removeTag(tag)">
+            <span class="material-icons">close</span>
+          </button>
+        </div>
       </div>
       <BaseButton :label="'Skapa inlägg'" />
     </form>
@@ -69,9 +74,12 @@ export default {
 
     const handleKeydown = () => {
       if (!tags.value.includes(tag.value)) {
-        tag.value = tag.value.replace(/ s/, '');
-        tags.value.push(tag.value);
+        tag.value = tag.value.trim();
+        if (tag.value !== '') {
+          tags.value.push(tag.value);
+        }
       }
+
       tag.value = '';
     };
 
@@ -82,6 +90,12 @@ export default {
         el.style.height = 'auto';
         el.style.height = el.scrollHeight + 5 + 'px';
       }
+    };
+
+    const removeTag = (tag) => {
+      tags.value = tags.value.filter((t) => {
+        return t !== tag;
+      });
     };
 
     const handleSubmit = async () => {
@@ -119,6 +133,7 @@ export default {
       quote,
       thumbnail,
       textareaRef,
+      removeTag,
     };
   },
 };
@@ -133,6 +148,14 @@ form {
 .create {
   max-width: 500px;
   margin: 0 auto;
+}
+.close-button {
+  border: none;
+  background: none;
+}
+
+.close-button .material-icons {
+  font-size: unset;
 }
 
 .pill {
