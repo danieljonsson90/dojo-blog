@@ -8,7 +8,10 @@
     </router-link>
     <div class="post-header">
       <div class="thumbnail" v-if="post.thumbnail">
-        <img :src="post.thumbnail" alt="uploaded image" />
+        <img
+          :src="post.thumbnail"
+          alt="thumbnail image for specific blog post"
+        />
       </div>
       <blockquote
         class="wp-block-quote is-layout-flow wp-block-quote-is-layout-flow"

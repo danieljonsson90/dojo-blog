@@ -58,7 +58,6 @@
 <script>
 import { ref } from 'vue';
 import BaseLink from './BaseLink.vue';
-import { Primary } from '@/stories/Button.stories';
 
 export default {
   components: { BaseLink },
@@ -81,7 +80,8 @@ nav .base-link {
 }
 
 header {
-  background-color: #222; /* valfritt, men ofta behövs för att täcka bakomliggande */
+  position: relative;
+
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -92,6 +92,22 @@ header {
   background-position: center;
   color: white;
   padding: 2rem;
+}
+
+header::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 100%;
+  width: 100%;
+  background-color: rgba(0, 0, 0, 0.2); /* Darker overlay */
+  z-index: 1;
+}
+
+header * {
+  position: relative;
+  z-index: 2; /* Put actual content above the overlay */
 }
 
 header .title .base-link {
