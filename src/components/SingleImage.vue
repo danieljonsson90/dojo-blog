@@ -97,7 +97,7 @@ export default {
 .image-content .material-icons {
   font-weight: bold;
   font-size: 28px;
-  color: #bbb;
+  color: #424242;
   cursor: pointer;
 }
 .image-content button.close {

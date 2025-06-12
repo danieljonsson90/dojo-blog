@@ -40,7 +40,7 @@ export default {
   padding: 10px;
 }
 .tag-cloud a {
-  color: #ccc;
+  color: #424242;
   text-decoration: none;
 }
 

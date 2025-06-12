@@ -111,7 +111,7 @@ export default {
 }
 
 .tag {
-  color: #ccc;
+  color: #424242;
   margin-right: 0.5rem;
 }
 
@@ -164,7 +164,7 @@ export default {
   display: inline-block;
   cursor: pointer;
   font-size: 24px;
-  color: #bbb;
+  color: #424242;
 }
 
 .post-content button {
