@@ -22,7 +22,15 @@
   <div v-else>
     <Spinner v-if="!error" />
   </div>
-  <Modal :show="showModal" @close="showModal = false" @remove="handleDelete">
+  <Modal
+    v-if="showModal"
+    :show="showModal"
+    :showRemove="true"
+    :removeText="'Ta bort'"
+    :showClose="true"
+    @close="showModal = false"
+    @remove="handleDelete"
+  >
     <h2>Ta bort inlägg</h2>
     <p>
       Är du säker på att du vill ta bort inlägget. När inlägget är borttaget går
@@ -92,6 +100,11 @@ h1 {
   cursor: pointer;
   box-sizing: border-box;
   font-size: smaller;
+}
+.post .details-actions a:focus-visible {
+  border-radius: 1px;
+  outline: #ff8800 solid 3px;
+  outline-offset: 3px;
 }
 
 .post .details-actions button {

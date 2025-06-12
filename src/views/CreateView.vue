@@ -139,7 +139,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 form {
   text-align: left;
   margin: 0 15px;

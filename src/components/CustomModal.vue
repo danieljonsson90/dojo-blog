@@ -3,7 +3,12 @@
     <div class="modal-content">
       <slot />
       <div class="modal-buttons">
-        <button v-if="showClose" class="close-button" @click="close">
+        <button
+          ref="closeButton"
+          v-if="showClose"
+          class="close-button"
+          @click="close"
+        >
           <span class="material-icons">close</span>
         </button>
         <BaseButton
@@ -27,6 +32,7 @@
 <script>
 import BaseButton from './BaseButton.vue';
 import useEscapeBlurOrEmit from '../composables/useEscapeBlurOrEmit';
+import { onMounted, ref } from 'vue';
 export default {
   props: [
     'show',
@@ -42,9 +48,13 @@ export default {
   setup(props, { emit }) {
     const close = () => emit('close');
     const remove = () => emit('remove');
-    useEscapeBlurOrEmit(null, close);
+    const closeButton = ref();
+    useEscapeBlurOrEmit();
 
-    return { close, remove };
+    onMounted(() => {
+      closeButton.value.focus();
+    });
+    return { close, remove, closeButton };
   },
 };
 </script>
@@ -94,6 +104,6 @@ export default {
   bottom: 75%;
   right: 2%;
   margin: 0;
-  color: #d3d3d3;
+  color: #424242;
 }
 </style>

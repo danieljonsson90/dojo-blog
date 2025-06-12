@@ -161,4 +161,22 @@ form {
   max-width: 500px;
   margin: 0 auto;
 }
+
+.close-button {
+  border: none;
+  background: none;
+}
+
+.close-button .material-icons {
+  font-size: unset;
+}
+.pill {
+  display: inline-block;
+  margin: 10px 10px 0 0;
+  color: #444;
+  background: #ddd;
+  padding: 8px;
+  border-radius: 20px;
+  font-size: 14px;
+}
 </style>

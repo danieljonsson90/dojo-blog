@@ -46,6 +46,7 @@
     </div>
   </div>
   <Modal
+    v-if="showModal"
     :show="showModal"
     :showRemove="true"
     :removeText="'Ta bort'"
@@ -66,7 +67,6 @@ import { computed } from 'vue';
 import removePost from '../composables/removePost';
 import Modal from '@/components/CustomModal.vue';
 import { ref } from 'vue';
-import useEscapeBlurOrEmit from '../composables/useEscapeBlurOrEmit';
 export default {
   props: ['post'],
   emits: ['delete'],
@@ -85,8 +85,6 @@ export default {
         showModal.value = false;
       }
     };
-
-    useEscapeBlurOrEmit();
 
     return { snippet, handleDelete, showModal };
   },
