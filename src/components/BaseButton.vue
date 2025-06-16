@@ -28,6 +28,10 @@ export default {
         return ['small', 'medium', 'large'].indexOf(value) !== -1;
       },
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
     backgroundColor: {
       type: String,
     },
@@ -56,7 +60,7 @@ export default {
   color: white;
   background: #ff8800;
   border-radius: 5px;
-  border: solid 1px #eee;
+  border: none;
   padding: 5px 10px;
   margin-top: 20px;
   display: inline-block;

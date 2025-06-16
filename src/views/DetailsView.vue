@@ -11,7 +11,7 @@
         <cite>— {{ post.quoteOrigin }}</cite>
       </blockquote>
       <p class="pre">{{ post.body }}</p>
-      <div class="details-actions">
+      <div class="details-actions" v-if="isLoggedIn">
         <BaseButton @click="showModal = true" :label="'Ta bort'" />
         <router-link :to="{ name: 'Edit', params: { id: post.id } }">
           Redigera
@@ -45,8 +45,9 @@ import Spinner from '../components/AppSpinner.vue';
 import removePost from '../composables/removePost';
 import { useRouter } from 'vue-router';
 import Modal from '@/components/CustomModal.vue';
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import BaseButton from '@/components/BaseButton.vue';
+import { useAuthStore } from '@/stores/auth';
 export default {
   props: ['id'],
   components: { Spinner, Modal, BaseButton },
@@ -54,6 +55,8 @@ export default {
     const { post, error, load } = getPost(props.id);
     const router = useRouter();
     const showModal = ref(false);
+    const authStore = useAuthStore();
+    const isLoggedIn = computed(() => authStore.isLoggedIn);
     load();
     const { errorRemove, remove } = removePost();
     const handleDelete = () => {
@@ -61,7 +64,7 @@ export default {
       router.push('/');
     };
 
-    return { post, error, handleDelete, showModal, errorRemove };
+    return { post, error, handleDelete, showModal, errorRemove, isLoggedIn };
   },
 };
 </script>

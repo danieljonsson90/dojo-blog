@@ -1,5 +1,6 @@
 <template>
   <header>
+    <AdminDashborad />
     <div class="heading">
       <span class="title">
         <BaseLink
@@ -20,7 +21,7 @@
     </div>
     <nav>
       <div>
-        <div class="links" :class="{ small: showLinks }">
+        <div class="links" :class="{ small: showLinks }" v-if="isReady">
           <BaseLink
             :name="'Home'"
             :label="'Hem'"
@@ -36,6 +37,7 @@
             size="large"
           />
           <BaseLink
+            v-if="isLoggedIn"
             :name="'Create'"
             :label="'Skapa inlägg'"
             :primary="false"
@@ -56,18 +58,27 @@
 </template>
 
 <script>
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import BaseLink from './BaseLink.vue';
-
+import AdminDashborad from './AdminDashborad.vue';
+import { useAuthStore } from '@/stores/auth';
 export default {
-  components: { BaseLink },
+  components: { BaseLink, AdminDashborad },
   setup() {
     const showLinks = ref(false);
     const onMenuClick = () => {
       showLinks.value = !showLinks.value;
     };
+    const authStore = useAuthStore();
+    const isLoggedIn = computed(() => authStore.isLoggedIn);
+    const isReady = computed(() => authStore.isReady);
 
-    return { onMenuClick, showLinks };
+    return {
+      onMenuClick,
+      showLinks,
+      isLoggedIn,
+      isReady,
+    };
   },
 };
 </script>

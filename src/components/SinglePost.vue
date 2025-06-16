@@ -29,7 +29,7 @@
           Läs mer
         </router-link>
       </p>
-      <div class="actions">
+      <div class="actions" v-if="isLoggedIn">
         <router-link
           :to="{ name: 'Edit', params: { id: post.id } }"
           aria-label="Redigera inlägg"
@@ -67,6 +67,7 @@ import { computed } from 'vue';
 import removePost from '../composables/removePost';
 import Modal from '@/components/CustomModal.vue';
 import { ref } from 'vue';
+import { useAuthStore } from '@/stores/auth';
 export default {
   props: ['post'],
   emits: ['delete'],
@@ -75,7 +76,8 @@ export default {
     const snippet = computed(() => {
       return props.post.body.substring(0, 300) + '....';
     });
-
+    const authStore = useAuthStore();
+    const isLoggedIn = computed(() => authStore.isLoggedIn);
     const showModal = ref(false);
     const { errorRemove, remove } = removePost();
     const handleDelete = async () => {
@@ -86,7 +88,7 @@ export default {
       }
     };
 
-    return { snippet, handleDelete, showModal };
+    return { snippet, handleDelete, showModal, isLoggedIn };
   },
 };
 </script>

@@ -37,6 +37,10 @@ export default {
     color: {
       type: String,
     },
+    disabled: {
+      type: Boolean,
+      default: false,
+    },
   },
   setup(props) {
     props = reactive(props);

@@ -1,4 +1,5 @@
 import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
 const firebaseConfig = {
   apiKey: 'AIzaSyAAJHVTaHuViqa1RfSwFml_qdv6mEdvVvY',
   authDomain: 'vue-firebase-sites-8ff16.firebaseapp.com',
@@ -11,4 +12,8 @@ const firebaseConfig = {
 //init firebase
 const app = initializeApp(firebaseConfig);
 
+// Initialize Firebase Authentication
+const auth = getAuth(app);
+
+export { auth };
 export default app;

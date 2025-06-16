@@ -9,8 +9,16 @@
 <script>
 import Navbar from './components/AppHeader.vue';
 import AppFooter from './components/AppFooter.vue';
+import { onMounted } from 'vue';
+import { useAuthStore } from '@/stores/auth';
 export default {
   components: { Navbar, AppFooter },
+  setup() {
+    const authStore = useAuthStore();
+    onMounted(() => {
+      authStore.initAuth();
+    });
+  },
 };
 </script>
 

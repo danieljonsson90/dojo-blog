@@ -7,6 +7,7 @@ import RealTime from '@/views/RealTime.vue';
 import Edit from '@/views/EditView.vue';
 import Gallery from '@/views/GalleryView.vue';
 import PostsView from '@/views/PostsView.vue';
+import AdminLogin from '../views/AdminLogin.vue';
 
 const routes = [
   {
@@ -45,6 +46,11 @@ const routes = [
     path: '/posts',
     name: 'Posts',
     component: PostsView,
+  },
+  {
+    path: '/login',
+    name: 'AdminLogin',
+    component: AdminLogin,
   },
   {
     path: '/realtime',
