@@ -16,7 +16,7 @@
         :required="true"
         v-model="password"
       />
-      <BaseButton label="Login" :disabled="loading" />
+      <BaseButton type="submit" label="Login" :disabled="loading" />
       <p v-if="error" class="error">{{ error }}</p>
     </form>
   </div>

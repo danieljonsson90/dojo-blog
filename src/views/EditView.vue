@@ -43,7 +43,7 @@
           </button>
         </div>
       </div>
-      <BaseButton :label="'Uppdatera inlägg'" />
+      <BaseButton :type="'submit'" :label="'Uppdatera inlägg'" />
     </form>
     <div v-else>
       <Spinner v-if="!error" />

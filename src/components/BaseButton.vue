@@ -4,6 +4,8 @@
     @click="$emit('click')"
     ref="baseButton"
     :style="{ backgroundColor }"
+    :type="type"
+    :disabled="disabled"
   >
     {{ label }}
   </button>
@@ -17,6 +19,10 @@ export default {
     label: {
       type: String,
       required: true,
+    },
+    type: {
+      type: String,
+      default: 'button',
     },
     primary: {
       type: Boolean,

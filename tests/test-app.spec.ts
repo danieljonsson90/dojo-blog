@@ -18,8 +18,24 @@ const updatePost = {
 
 test.describe('Navigation', () => {
   const baseURL = process.env.BASE_URL;
+  const email = process.env.EMAIL;
+  const password = process.env.PASSWORD;
+
   test.beforeEach(async ({ page }) => {
-    await page.goto(baseURL + 'posts');
+    await page.goto(baseURL);
+    if (await page.getByRole('button', { name: 'Logga ut' }).isVisible()) {
+      await page.goto(baseURL + 'posts');
+    } else {
+      await page.getByRole('link', { name: 'Logga in' }).click();
+      await page.getByRole('textbox', { name: 'Email' }).click();
+      await page.getByRole('textbox', { name: 'Email' }).fill(email);
+      await page.getByRole('textbox', { name: 'Password' }).click();
+      await page.getByRole('textbox', { name: 'Password' }).fill(password);
+      await page.getByRole('button', { name: 'Login' }).click();
+      await page.waitForSelector('[data-testid="home"]');
+      await page.goto(baseURL + 'posts');
+    }
+    await page.waitForSelector('.post');
   });
   test('test edit link', async ({ page }) => {
     await page.waitForSelector('.post');
@@ -68,9 +84,24 @@ test.describe('Navigation', () => {
 
 test.describe('Formulärinmatning och validering', () => {
   const baseURL = process.env.BASE_URL;
+  const email = process.env.EMAIL;
+  const password = process.env.PASSWORD;
   test.beforeEach(async ({ page }) => {
-    await page.goto(baseURL + 'posts');
+    await page.goto(baseURL);
+    if (await page.getByRole('button', { name: 'Logga ut' }).isVisible()) {
+      await page.goto(baseURL + 'posts');
+    } else {
+      await page.getByRole('link', { name: 'Logga in' }).click();
+      await page.getByRole('textbox', { name: 'Email' }).click();
+      await page.getByRole('textbox', { name: 'Email' }).fill(email);
+      await page.getByRole('textbox', { name: 'Password' }).click();
+      await page.getByRole('textbox', { name: 'Password' }).fill(password);
+      await page.getByRole('button', { name: 'Login' }).click();
+      await page.waitForSelector('[data-testid="home"]');
+      await page.goto(baseURL + 'posts');
+    }
     await page.waitForSelector('.post');
+    await cleanTestPost(page);
   });
 
   test('Skapa och ta bort ett inlägg', async ({ page }) => {
@@ -110,6 +141,7 @@ async function createAndCheckDefaultPost(page: Page) {
   await page.locator('input[type="text"]').nth(4).fill(post.tag);
   await page.locator('input[type="text"]').nth(4).press('Enter');
   await page.getByRole('button', { name: 'Skapa inlägg' }).click();
+  await page.waitForSelector('.post');
 }
 
 async function removeAndCheckDefaultPost(page: Page) {
@@ -117,6 +149,15 @@ async function removeAndCheckDefaultPost(page: Page) {
   await page.getByTestId('modal-remove').click();
 }
 
+async function cleanTestPost(page: Page) {
+  if (
+    (await page.getByText('Testinlägg').first().isVisible()) ||
+    (await page.getByText('Uppdaterat Testinlägg').first().isVisible())
+  ) {
+    await page.getByText('delete').first().click();
+    await page.getByTestId('modal-remove').click();
+  }
+}
 async function updateAndCheckDefaultPost(page: Page) {
   await page.getByRole('link', { name: 'redigera' }).first().click();
   await page.locator('input[type="text"]').first().click();

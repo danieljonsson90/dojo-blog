@@ -27,7 +27,6 @@
         label="Content:"
         name="content"
         type="textarea"
-        ref="textareaRef"
       />
       <BaseInput
         v-model="tag"
@@ -39,12 +38,16 @@
       <div>
         <div v-for="tag in tags" :key="tag" class="pill">
           #{{ tag }}
-          <button class="close-button" @click="removeTag(tag)">
+          <button
+            class="close-button"
+            aria-label="Remove tag"
+            @click="removeTag(tag)"
+          >
             <span class="material-icons">close</span>
           </button>
         </div>
       </div>
-      <BaseButton :label="'Skapa inlägg'" />
+      <BaseButton :type="'submit'" :label="'Skapa inlägg'" />
     </form>
     <div class="error">
       {{ error }}
@@ -53,7 +56,7 @@
 </template>
 
 <script>
-import { ref, watch, nextTick } from 'vue';
+import { ref } from 'vue';
 import addPost from '../composables/addPost';
 import { useRouter } from 'vue-router';
 import BaseButton from '@/components/BaseButton.vue';
@@ -70,7 +73,6 @@ export default {
     const tag = ref('');
     const tags = ref([]);
     const router = useRouter();
-    const textareaRef = ref(null);
 
     const handleKeydown = () => {
       if (!tags.value.includes(tag.value)) {
@@ -81,15 +83,6 @@ export default {
       }
 
       tag.value = '';
-    };
-
-    const autoResize = () => {
-      const el = textareaRef.value;
-
-      if (el) {
-        el.style.height = 'auto';
-        el.style.height = el.scrollHeight + 5 + 'px';
-      }
     };
 
     const removeTag = (tag) => {
@@ -115,10 +108,6 @@ export default {
       }
     };
     const { error, add } = addPost();
-    watch(body, async () => {
-      await nextTick();
-      autoResize();
-    });
 
     return {
       title,
@@ -127,12 +116,10 @@ export default {
       handleKeydown,
       tags,
       handleSubmit,
-      autoResize,
       error,
       quoteOrigin,
       quote,
       thumbnail,
-      textareaRef,
       removeTag,
     };
   },
