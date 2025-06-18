@@ -44,7 +44,7 @@ export default {
     'addText',
     'removeText',
   ],
-  emits: ['close', 'delete'],
+  emits: ['close', 'remove'],
   components: { BaseButton },
   setup(props, { emit }) {
     const close = () => emit('close');

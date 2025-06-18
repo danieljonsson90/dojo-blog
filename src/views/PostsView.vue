@@ -10,11 +10,12 @@
         <TagCloud :posts="posts" />
       </div>
       <div v-else>
-        <p class="no-posts">
+        <p class="no-posts" v-if="isLoggedIn">
           Det finns inga inlägg, gå till
           <router-link :to="{ name: 'Create' }">skapa inlägg</router-link>
           för att skapa ett nytt inlägg.
         </p>
+        <p v-else>Det finns inga inlägg att visa.</p>
       </div>
     </template>
   </div>
@@ -25,14 +26,20 @@ import PostList from '../components/PostList.vue';
 import getPosts from '../composables/getPosts';
 import Spinner from '../components/AppSpinner.vue';
 import TagCloud from '@/components/TagCloud.vue';
-
+import { useAuthStore } from '@/stores/auth';
+import { usePostsStore } from '@/stores/posts';
+import { computed } from 'vue';
 export default {
   components: { PostList, Spinner, TagCloud },
   setup() {
-    const { posts, error, isLoading, load } = getPosts();
+    const authStore = useAuthStore();
+    const isLoggedIn = computed(() => authStore.isLoggedIn);
+    const postsStore = usePostsStore();
+    const posts = computed(() => postsStore.posts);
+    const { error, isLoading, load } = getPosts();
     load();
 
-    return { posts, error, isLoading };
+    return { posts, error, isLoading, isLoggedIn };
   },
 };
 </script>

@@ -7,9 +7,10 @@ import {
   query,
   orderBy,
 } from 'firebase/firestore';
+import { usePostsStore } from '@/stores/posts';
 
 const getPosts = () => {
-  const posts = ref(null);
+  const postsStore = usePostsStore();
   const error = ref(null);
   const isLoading = ref(false);
 
@@ -22,18 +23,20 @@ const getPosts = () => {
       const postsCol = collection(db, 'posts');
       const q = query(postsCol, orderBy('createdAt', 'desc'));
       const postsSnapshot = await getDocs(q);
-      posts.value = postsSnapshot.docs.map((doc) => {
-        return { ...doc.data(), id: doc.id, loaded: true };
-      });
+      postsStore.setPosts(
+        postsSnapshot.docs.map((doc) => {
+          return { ...doc.data(), id: doc.id, loaded: true };
+        })
+      );
     } catch (err) {
       error.value = err.message;
-      posts.value = []; // Consider setting to empty array on error
+      postsStore.setPosts([]); // Consider setting to empty array on error
     } finally {
       isLoading.value = false;
     }
   };
 
-  return { posts, error, isLoading, load };
+  return { error, isLoading, load };
 };
 
 export default getPosts;

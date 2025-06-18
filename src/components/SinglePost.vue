@@ -52,17 +52,23 @@
   <Modal
     v-if="showModal"
     :show="showModal"
-    :showRemove="true"
+    :showRemove="!error"
     :removeText="'Ta bort'"
     :showClose="true"
     @close="showModal = false"
     @remove="handleDelete"
   >
     <h2>Ta bort inlägg</h2>
-    <p>
+    <p v-if="!error">
       Är du säker på att du vill ta bort inlägget. När inlägget är borttaget går
       det inte att ångra.
     </p>
+    <div v-if="error">
+      <p>
+        Något gick fel vid borttagning av inlägg: <br /><br />
+        {{ error }}
+      </p>
+    </div>
   </Modal>
 </template>
 
@@ -74,25 +80,24 @@ import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth';
 export default {
   props: ['post'],
-  emits: ['delete'],
   components: { Modal },
-  setup(props, { emit }) {
+  setup(props) {
     const snippet = computed(() => {
       return props.post.body.substring(0, 300) + '....';
     });
     const authStore = useAuthStore();
     const isLoggedIn = computed(() => authStore.isLoggedIn);
     const showModal = ref(false);
-    const { errorRemove, remove } = removePost();
+    const { error, remove } = removePost();
     const handleDelete = async () => {
       const removed = await remove(props.post.id);
+      console.log(error.value);
       if (removed) {
-        emit('delete', props.post.id);
         showModal.value = false;
       }
     };
 
-    return { snippet, handleDelete, showModal, isLoggedIn };
+    return { snippet, handleDelete, showModal, isLoggedIn, error };
   },
 };
 </script>
