@@ -3,7 +3,7 @@ import { getFirestore, doc, deleteDoc } from 'firebase/firestore';
 import { ref } from 'vue';
 import { usePostsStore } from '@/stores/posts';
 const removePost = () => {
-  const error = ref(null);
+  const errorRemove = ref(null);
   const postsStore = usePostsStore();
 
   const remove = async (id) => {
@@ -13,11 +13,11 @@ const removePost = () => {
       postsStore.deletePost(id);
       return true;
     } catch (err) {
-      error.value = err.message;
+      errorRemove.value = err.message;
     }
   };
 
-  return { error, remove };
+  return { errorRemove, remove };
 };
 
 export default removePost;

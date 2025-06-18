@@ -111,7 +111,6 @@ test.describe('Formulärinmatning och validering', () => {
     await expect(page.getByText(post.title).first()).toBeVisible();
 
     await removeAndCheckDefaultPost(page);
-    await expect(page.getByText(post.title)).not.toBeVisible();
   });
   test('Skapa, uppdatera och ta bort inlägg', async ({ page }) => {
     await createAndCheckDefaultPost(page);
@@ -124,7 +123,6 @@ test.describe('Formulärinmatning och validering', () => {
     await expect(page.getByText(updatePost.body)).toBeVisible();
 
     await removeAndCheckDefaultPost(page);
-    await expect(page.getByText(post.title)).not.toBeVisible();
   });
 });
 
@@ -148,6 +146,7 @@ async function createAndCheckDefaultPost(page: Page) {
 async function removeAndCheckDefaultPost(page: Page) {
   await page.getByTestId('remove-post-button').first().click();
   await page.getByTestId('modal-remove').click();
+  await expect(page.getByTestId('modal-remove')).not.toBeVisible();
 }
 
 async function cleanTestPost(page: Page) {

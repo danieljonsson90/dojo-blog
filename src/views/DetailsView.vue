@@ -29,17 +29,23 @@
   <Modal
     v-if="showModal"
     :show="showModal"
-    :showRemove="true"
+    :showRemove="!errorRemove"
     :removeText="'Ta bort'"
     :showClose="true"
     @close="showModal = false"
     @remove="handleDelete"
   >
     <h2>Ta bort inlägg</h2>
-    <p>
+    <p v-if="!errorRemove">
       Är du säker på att du vill ta bort inlägget. När inlägget är borttaget går
       det inte att ångra.
     </p>
+    <div v-if="errorRemove">
+      <p>
+        Något gick fel vid borttagning av inlägg: <br /><br />
+        {{ errorRemove }}
+      </p>
+    </div>
   </Modal>
 </template>
 
@@ -62,10 +68,13 @@ export default {
     const authStore = useAuthStore();
     const isLoggedIn = computed(() => authStore.isLoggedIn);
     load();
-    const { errorRemove, remove } = removePost();
-    const handleDelete = () => {
-      remove(props.id);
-      router.push('/');
+    const { errorRemove, remove } = removePost(props.id);
+    const handleDelete = async () => {
+      const removed = await remove(props.id);
+      if (removed) {
+        showModal.value = false;
+        router.push('/posts');
+      }
     };
 
     return { post, error, handleDelete, showModal, errorRemove, isLoggedIn };
