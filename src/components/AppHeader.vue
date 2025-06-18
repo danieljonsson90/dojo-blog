@@ -43,6 +43,7 @@
             :primary="false"
             color="white"
             size="large"
+            data-testid="create-post-link"
           />
           <BaseLink
             :name="'Gallery'"

@@ -12,7 +12,11 @@
       </blockquote>
       <p class="pre">{{ post.body }}</p>
       <div class="details-actions" v-if="isLoggedIn">
-        <BaseButton @click="showModal = true" :label="'Ta bort'" />
+        <BaseButton
+          @click="showModal = true"
+          :label="'Ta bort'"
+          data-testid="remove-post-button"
+        />
         <router-link :to="{ name: 'Edit', params: { id: post.id } }">
           Redigera
         </router-link>

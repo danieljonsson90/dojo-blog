@@ -15,39 +15,24 @@ const updatePost = {
   author: 'unknown',
   tag: 'test',
 } as const;
-
+const baseURL = process.env.BASE_URL;
+const email = process.env.EMAIL;
+const password = process.env.PASSWORD;
 test.describe('Navigation', () => {
-  const baseURL = process.env.BASE_URL;
-  const email = process.env.EMAIL;
-  const password = process.env.PASSWORD;
-
   test.beforeEach(async ({ page }) => {
-    await page.goto(baseURL);
-    if (await page.getByRole('button', { name: 'Logga ut' }).isVisible()) {
-      await page.goto(baseURL + 'posts');
-    } else {
-      await page.getByRole('link', { name: 'Logga in' }).click();
-      await page.getByRole('textbox', { name: 'Email' }).click();
-      await page.getByRole('textbox', { name: 'Email' }).fill(email);
-      await page.getByRole('textbox', { name: 'Password' }).click();
-      await page.getByRole('textbox', { name: 'Password' }).fill(password);
-      await page.getByRole('button', { name: 'Login' }).click();
-      await page.waitForSelector('[data-testid="home"]');
-      await page.goto(baseURL + 'posts');
-    }
-    await page.waitForSelector('.post');
+    await arrangeBeforeTest(page);
   });
   test('test edit link', async ({ page }) => {
-    await page.waitForSelector('.post');
+    await createAndCheckDefaultPost(page);
     await page.getByRole('link', { name: 'Redigera inlägg' }).first().click();
     await expect(
       page.getByRole('button', { name: 'Uppdatera inlägg' })
     ).toBeVisible();
     await page.getByRole('button', { name: 'Uppdatera inlägg' }).click();
+    await removeAndCheckDefaultPost(page);
   });
 
   test('test create link', async ({ page }) => {
-    await page.goto(baseURL);
     // Click the create link.
     await page.getByRole('link', { name: 'Skapa inlägg' }).click();
 
@@ -59,7 +44,6 @@ test.describe('Navigation', () => {
   });
 
   test('test gallery link', async ({ page }) => {
-    await page.goto(baseURL);
     // Click the create link.
     await page.getByRole('link', { name: 'Galleri' }).click();
 
@@ -69,8 +53,8 @@ test.describe('Navigation', () => {
   });
 
   test('test details link', async ({ page }) => {
-    await page.goto(baseURL + 'posts');
-    await page.waitForSelector('.post');
+    await createAndCheckDefaultPost(page);
+
     await page.getByRole('link', { name: 'Läs mer' }).first().click();
     await page.waitForSelector('.details');
 
@@ -79,29 +63,46 @@ test.describe('Navigation', () => {
 
     await expect(page.getByRole('button', { name: 'ta bort' })).toBeVisible();
     await expect(page.getByRole('link', { name: 'redigera' })).toBeVisible();
+    await removeAndCheckDefaultPost(page);
+  });
+});
+
+test.describe('Inloggning och utloggning', () => {
+  test('Logga in och ut', async ({ page }) => {
+    await page.goto(baseURL);
+    if (await page.getByRole('button', { name: 'Logga ut' }).isVisible()) {
+      await page.getByRole('button', { name: 'Logga ut' }).click();
+    }
+    // Click the login link.
+    await page.getByRole('link', { name: 'Logga in' }).click();
+
+    // Expects page to have a heading with the name of Installation.
+    await expect(
+      page.getByRole('heading', { name: 'Admin inloggning' })
+    ).toBeVisible();
+    await expect(page).toHaveURL(baseURL + 'login');
+
+    // Fill in the login form.
+    await page.getByRole('textbox', { name: 'E-mejl' }).fill(email);
+    await page.getByRole('textbox', { name: 'Lösenord' }).fill(password);
+    await page.getByRole('button', { name: 'Logga in' }).click();
+
+    // Expects to be logged in and redirected to home.
+    await expect(page.getByTestId('home')).toBeVisible();
+    await expect(page).toHaveURL(baseURL);
+
+    // Click the logout button.
+    await page.getByRole('button', { name: 'Logga ut' }).click();
+
+    // Expects to be logged out and redirected to home.
+    await expect(page.getByTestId('admin-login')).toBeVisible();
+    await expect(page).toHaveURL(baseURL + 'login');
   });
 });
 
 test.describe('Formulärinmatning och validering', () => {
-  const baseURL = process.env.BASE_URL;
-  const email = process.env.EMAIL;
-  const password = process.env.PASSWORD;
   test.beforeEach(async ({ page }) => {
-    await page.goto(baseURL);
-    if (await page.getByRole('button', { name: 'Logga ut' }).isVisible()) {
-      await page.goto(baseURL + 'posts');
-    } else {
-      await page.getByRole('link', { name: 'Logga in' }).click();
-      await page.getByRole('textbox', { name: 'Email' }).click();
-      await page.getByRole('textbox', { name: 'Email' }).fill(email);
-      await page.getByRole('textbox', { name: 'Password' }).click();
-      await page.getByRole('textbox', { name: 'Password' }).fill(password);
-      await page.getByRole('button', { name: 'Login' }).click();
-      await page.waitForSelector('[data-testid="home"]');
-      await page.goto(baseURL + 'posts');
-    }
-    await page.waitForSelector('.post');
-    await cleanTestPost(page);
+    await arrangeBeforeTest(page);
   });
 
   test('Skapa och ta bort ett inlägg', async ({ page }) => {
@@ -141,11 +142,11 @@ async function createAndCheckDefaultPost(page: Page) {
   await page.locator('input[type="text"]').nth(4).fill(post.tag);
   await page.locator('input[type="text"]').nth(4).press('Enter');
   await page.getByRole('button', { name: 'Skapa inlägg' }).click();
-  await page.waitForSelector('.post');
+  await page.waitForSelector('[data-testid="posts"]');
 }
 
 async function removeAndCheckDefaultPost(page: Page) {
-  await page.getByText('delete').first().click();
+  await page.getByTestId('remove-post-button').click();
   await page.getByTestId('modal-remove').click();
 }
 
@@ -154,7 +155,7 @@ async function cleanTestPost(page: Page) {
     (await page.getByText('Testinlägg').first().isVisible()) ||
     (await page.getByText('Uppdaterat Testinlägg').first().isVisible())
   ) {
-    await page.getByText('delete').first().click();
+    await page.getByTestId('remove-post-button').first().click();
     await page.getByTestId('modal-remove').click();
   }
 }
@@ -168,4 +169,22 @@ async function updateAndCheckDefaultPost(page: Page) {
 
   await page.locator('textarea').fill(updatePost.body);
   await page.getByRole('button', { name: 'Uppdatera inlägg' }).click();
+}
+
+async function arrangeBeforeTest(page: Page) {
+  await page.goto(baseURL);
+  if (await page.getByRole('button', { name: 'Logga ut' }).isVisible()) {
+    await page.goto(baseURL + 'posts');
+  } else {
+    await page.getByRole('link', { name: 'Logga in' }).click();
+    await page.getByRole('textbox', { name: 'Email' }).click();
+    await page.getByRole('textbox', { name: 'Email' }).fill(email);
+    await page.getByRole('textbox', { name: 'Password' }).click();
+    await page.getByRole('textbox', { name: 'Password' }).fill(password);
+    await page.getByRole('button', { name: 'Login' }).click();
+    await page.waitForSelector('[data-testid="home"]');
+    await page.goto(baseURL + 'posts');
+  }
+  await page.waitForSelector('[data-testid="posts"]');
+  await cleanTestPost(page);
 }

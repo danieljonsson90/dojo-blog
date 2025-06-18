@@ -36,7 +36,11 @@
         >
           <span class="material-icons edit">edit</span>
         </router-link>
-        <button @click="showModal = true" aria-label="Ta bort inlägg">
+        <button
+          @click="showModal = true"
+          aria-label="Ta bort inlägg"
+          data-testid="remove-post-button"
+        >
           <span class="material-icons">delete</span>
         </button>
       </div>

@@ -1,22 +1,22 @@
 <template>
-  <div class="login-container">
-    <h2>Admin Login</h2>
+  <div class="login-container" data-testid="admin-login">
+    <h2>Admin inloggning</h2>
     <form @submit.prevent="login">
       <BaseInput
-        label="Email"
+        label="E-mejl"
         type="email"
         name="email"
         :required="true"
         v-model="email"
       />
       <BaseInput
-        label="Password"
+        label="Lösenord"
         type="password"
         name="password"
         :required="true"
         v-model="password"
       />
-      <BaseButton type="submit" label="Login" :disabled="loading" />
+      <BaseButton type="submit" label="Logga in" :disabled="loading" />
       <p v-if="error" class="error">{{ error }}</p>
     </form>
   </div>
