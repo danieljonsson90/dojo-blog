@@ -146,7 +146,7 @@ async function createAndCheckDefaultPost(page: Page) {
 }
 
 async function removeAndCheckDefaultPost(page: Page) {
-  await page.getByTestId('remove-post-button').click();
+  await page.getByTestId('remove-post-button').first().click();
   await page.getByTestId('modal-remove').click();
 }
 

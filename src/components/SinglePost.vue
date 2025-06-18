@@ -91,7 +91,6 @@ export default {
     const { error, remove } = removePost();
     const handleDelete = async () => {
       const removed = await remove(props.post.id);
-      console.log(error.value);
       if (removed) {
         showModal.value = false;
       }
